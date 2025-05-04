@@ -20,13 +20,28 @@ instance EventuallyPositive.lesssim {Ω:Type*} (f: Filter Ω) : Preorder (Eventu
     use C1 * C2
     refine ⟨ Left.mul_pos hC1 hC2, ?_ ⟩
     have := Y.pos
-    filter_upwards [h1, h2, this]
-    intro N h1 h2 this
+    filter_upwards [h1, h2, this] with N h1 h2 this
     calc
       _ ≤ C1 * Y.val N := h1
       _ ≤ C1 * (C2 * Z.val N) := by gcongr
       _ = (C1 * C2) * Z.val N := by rw [mul_assoc]
-  lt_iff_le_not_le := by sorry
+  lt_iff_le_not_le := by
+    intro X Y
+    constructor
+    . intro h
+      constructor
+      . use 1
+        simp only [zero_lt_one, h 1, true_and]
+      by_contra! this
+      obtain ⟨ C, hC, this ⟩ := this
+      have hC_inv : C⁻¹ > 0 := Right.inv_pos.mpr hC
+      replace h := h C⁻¹ hC_inv
+      have hfalse := ∀ᶠ N in f, False := by
+        have hY := Y.pos
+        sorry
+      sorry
+
+    sorry
 }
 
 instance EventuallyPositive.distrib {Ω:Type*} (f: Filter Ω) : Distrib (EventuallyPositive f) :=
