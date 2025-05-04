@@ -8,10 +8,13 @@ class EventuallyPositive {Ω:Type*} (f: Filter Ω) where
   val : Ω → ℝ
   pos : ∀ᶠ N in f, val N > 0
 
-instance EventuallyPositive.lesssim {Ω:Type*} (f: Filter Ω) : Preorder (EventuallyPositive f) :=
+instance EventuallyPositive.LE {Ω:Type*} (f: Filter Ω) : LE (EventuallyPositive f) :=
 {
   le := fun X Y => ∃ (C:ℝ), C > 0 ∧ ∀ᶠ N in f, X.val N ≤ C * Y.val N
-  lt := fun X Y => ∀ (ε:ℝ), ε>0 → ∀ᶠ N in f, X.val N ≤ ε * Y.val N
+}
+
+instance EventuallyPositive.lesssim {Ω:Type*} (f: Filter Ω) : Preorder (EventuallyPositive f) :=
+{
   le_refl := by
     intro X; use 1
     simp
@@ -25,37 +28,20 @@ instance EventuallyPositive.lesssim {Ω:Type*} (f: Filter Ω) : Preorder (Eventu
       _ ≤ C1 * Y.val N := h1
       _ ≤ C1 * (C2 * Z.val N) := by gcongr
       _ = (C1 * C2) * Z.val N := by rw [mul_assoc]
+
+  lt := fun X Y => (X ≤ Y) ∧ ¬ (Y ≤ X)
   lt_iff_le_not_le := by
     intro X Y
-    constructor
-    . intro h
-      constructor
-      . use 1
-        simp only [zero_lt_one, h 1, true_and]
-      by_contra! this
-      obtain ⟨ C, hC, this ⟩ := this
-      have hC_inv : C⁻¹ > 0 := Right.inv_pos.mpr hC
-      replace h := h C⁻¹ hC_inv
-      have hfalse := ∀ᶠ N in f, False := by
-        have hY := Y.pos
-        sorry
-      sorry
-
-    sorry
+    rfl
 }
 
-instance EventuallyPositive.distrib {Ω:Type*} (f: Filter Ω) : Distrib (EventuallyPositive f) :=
+instance EventuallyPositive.add {Ω:Type*} (f: Filter Ω) : Add (EventuallyPositive f) :=
 {
   add := fun X Y => {
     val := fun N => X.val N + Y.val N
     pos := by sorry
   }
-  mul := fun X Y => {
-    val := fun N => X.val N * Y.val N
-    pos := by sorry
-  }
-  left_distrib := by sorry
-  right_distrib := by sorry
 }
+
 
 def OrderOfMagnitude {Ω:Type*} (f: Filter Ω) := OrderQuotient (EventuallyPositive f)
