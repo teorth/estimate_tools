@@ -1,0 +1,90 @@
+\chapter{Orders of magnitude}\label{ch:order_of_magnitude}
+
+The hyperreals ${}^* \R$ are already defined in Mathlib, using a Lean-canonically chosen ultrafilter on $\N$.  One could consider generalizing the hyperreal construction to other filters or ultrafilters, but given the extensive library support for the Mathlib hyperreals, and the fact that it already enjoys enough of a transfer principle for most applications, we will base our theory here on the Mathlib hyperreals.
+
+\begin{definition}[Positive hyperreals]\label{pos-hyperreal}  The positive hyperreals ${}^* \R^+$ are the set of hyperreals $X \in {}^* \R$ such that $X > 0$.  (Note that $X$ could be infinitesimal or infinite).
+
+If $X,Y$ are positive hyperreals, we write $X \lesssim Y$ if $X \leq CY$ for some real $C>0$.  We write $X \asymp Y$ if $X \lesssim Y \lesssim X$.  We write $X \ll Y$ if $X \leq \eps Y$ for all real $\eps>0$.
+\end{definition}
+
+\begin{lemma}[Lesssim order]\label{lesssim-order}  $\lesssim$ is a pre-order on ${}^* \R^+$, with $\asymp$ the associated equivalence relation, and $\ll$ the associated strict order.  Any two positive hyperreals are comparable under $\lesssim$.
+\end{lemma}
+
+\begin{proof} Easy.
+\end{proof}
+
+\begin{definition}[Orders of magnitude]\label{ord-def} The space $\O$ of orders of magnitude is defined to be the quotient space ${}^* \R^+ / \asymp$ of the positive hyperreals by the relation of asymptotic equivalence.  For a positive hyperreal $X$, we let $\Theta(X)$ denote the order of magnitude of $X$; this is a surjection from ${}^* \R^+$ to $\O$.
+\end{definition}
+
+
+\begin{lemma}[Theta kernel]\label{theta-kernel} For positive hyperreals $X,Y$, we have $\Theta(X) = \Theta(Y)$ if and only if $X \asymp Y$.
+\end{lemma}
+
+\begin{proof} Easy.
+\end{proof}
+
+\begin{definition}[Ordering on magnitudes]\label{ord-mag-def}  We linearly order $\O$ by the requirement that $\Theta(X) \leq \Theta(Y)$ if and only if $X \lesssim Y$, and  $\Theta(X) < \Theta(Y)$ if and only if $X \ll Y$.
+\end{definition}
+
+\begin{definition}[One]\label{one-def} We define $1 := \Theta(1)$.
+\end{definition}
+
+\begin{lemma}[Constants trivial]\label{const-triv} We have $\Theta(C) = 1$ for all real $C>0$.
+\end{lemma}
+
+\begin{proof} Easy.
+\end{proof}
+
+\begin{definition}[Arithmetic on magnitudes]\label{mag-arith}  We define addition on $\O$ by the requirement that $\Theta(X) + \Theta(Y) = \Theta(X+Y)$ for positive hyperreals $X,Y$.  Similarly we define multiplication, inverse, and division.  We define real exponentiation by requiring that $\Theta(X^\alpha) = \Theta(X)^\alpha$ for positive hyperreals $X$ and real $\alpha$.
+\end{definition}
+
+\begin{lemma}[Addition is tropical]\label{tropical-add} For all orders of magnitude $\Theta(X), \Theta(Y)$, we have $\Theta(X) + \Theta(Y) = \max(\Theta(X), \Theta(Y))$.
+\end{lemma}
+
+\begin{proof} Easy.
+\end{proof}
+
+\begin{corollary}[Additive commutative monoid]\label{add-comm-mon} $\O$ is an ordered additive idempotent commutative monoid.
+\end{corollary}
+
+\begin{proof} Easy.
+\end{proof}
+
+\begin{lemma}[Commutative semiring]\label{comm-semiring} $\O$ is a multiplicative ordered commutative group that distributes over addition.  (It is not a semiring in the Mathlib sense because it does not have a zero element.)
+\end{lemma}
+
+\begin{proof} Easy.
+\end{proof}
+
+\begin{lemma}[Power laws]\label{power-law}  Let $\Theta(X), \Theta(Y)$ be orders of magnitude, and $\alpha,\beta$ be real numbers.
+    \begin{itemize}
+    \item[(i)] We have $\Theta(XY)^\alpha = \Theta(X^\alpha Y^\alpha)$ and $\Theta(X/Y)^\alpha = \Theta(X^\alpha / Y^\alpha)$.
+    \item[(ii)] We have $\Theta(X^{\alpha \beta}) = \Theta(X^\alpha)^\beta$.  
+    \item[(iii)] We have $\Theta(X)^0 = 1$, $\Theta(X)^1 = \Theta(X)$, and $\Theta(X)^{-1} = 1 / \Theta(X)$.
+    \item[(iv)] We have $\Theta(1)^\alpha = 1$.
+    \item[(v)] We have $\Theta(X+Y)^\alpha = \Theta(X)^\alpha + \Theta(Y)^\alpha$ for $\alpha \geq 0$.
+    \item[(vi)]  If $\alpha \geq 0$ and $\Theta(X) \leq \Theta(Y)$, then $\Theta(X)^\alpha \leq \Theta(Y)^\alpha$.
+    \item[(vii)] If $\alpha > 0$, then $\Theta(X) \leq \Theta(Y)$, if and only if $\Theta(X)^\theta \leq \Theta(Y)^\alpha$, and $\Theta(X) < \Theta(Y)$ if and only if $\Theta(X)^\alpha < \Theta(Y)^\alpha$.
+    \item[(viii)] If $\alpha \leq 0$ and $\Theta(X) \leq \Theta(Y)$, then $\Theta(X)^\alpha \geq \Theta(Y)^\alpha$.
+    \item[(ix)] If $\alpha < 0$, then $\Theta(X) \leq \Theta(Y)$, if and only if $\Theta(X)^\alpha \geq \Theta(Y)^\alpha$, and $\Theta(X) < \Theta(Y)$ if and only if $\Theta(X)^\alpha > \Theta(Y)^\alpha$.   
+    \end{itemize}
+\end{lemma}
+
+\begin{definition}[Log-order of magnitude] \label{log-order-def}  We define $\log \O$ to be the collection of formal logarithms of magnitude $\log(\Theta(X))$ of orders of magnitude $\Theta(X)$.  $1$, multiplication, and exponentiation of orders of magnitude become $0$, addition, and scalar multiplication; and order is preserved. By definition, $\log \colon \O \to \log \O$ is a bijection.
+\end{definition}
+
+\begin{lemma}[Ordered vector space]\label{ord-vec} $\log \O$ is a linearly ordered real vector space.
+\end{lemma}
+
+\begin{proof} Easy.
+\end{proof}
+
+\begin{lemma}[Log of addition]\label{log-add}  For orders of magnitude $\Theta(X), \Theta(Y)$, we have $\log(\Theta(X) + \Theta(Y)) = \max(\log(\Theta(X)), \log(\Theta(Y)))$.
+\end{lemma}
+
+\begin{proof} Easy.
+\end{proof}
+
+\begin{lemma}[Logarithm of multiplication and exponentiation]\label{log-mult}  For orders of magnitude $\Theta(X), \Theta(Y)$, we have $\log(1) = 0$ (and more generally $\log(C) = 0$ for any real $C>0$), $\log(\Theta(X) \Theta(Y)) = \log(\Theta(X)) + \log(\Theta(Y))$, and $\log(\Theta(X) / \Theta(Y)) = \log(\Theta(X)) - \log(\Theta(Y))$.  For any real $\alpha$, we have $\log(\Theta(X)^\alpha) = \alpha \log(\Theta(X))$.
+\end{lemma}
+
