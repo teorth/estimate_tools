@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.4.28)  5 MAY 2025 09:27
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.4.28)  5 MAY 2025 09:33
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -632,8 +632,8 @@ LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 [2
 
 ]
-Overfull \hbox (14.6065pt too wide) in paragraph at lines 88--89
-[][]\TU/lmr/bx/n/10 Lemma 16 \TU/lmr/m/n/10 (Logarithm of multiplication and exponentiation)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 For orders of magnitude $[][][][][] [][][][]$,
+Overfull \hbox (14.6065pt too wide) in paragraph at lines 85--86
+[][]\TU/lmr/bx/n/10 Lemma 15 \TU/lmr/m/n/10 (Logarithm of multiplication and exponentiation)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 For orders of magnitude $[][][][][] [][][][]$,
  []
 
 )) [3] (./print.aux)
@@ -647,10 +647,10 @@ Package rerunfilecheck Info: File `print.out' has not changed.
 Here is how much of TeX's memory you used:
  16841 strings out of 474760
  308403 string characters out of 5761057
- 1940148 words of memory out of 5000000
+ 1942148 words of memory out of 5000000
  38797 multiletter control sequences out of 15000+600000
  563424 words of font info for 83 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 90i,6n,114p,612b,467s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 90i,6n,114p,612b,475s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 Output written on print.pdf (4 pages).
