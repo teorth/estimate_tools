@@ -93,6 +93,7 @@ lemma EventuallyPositive.add_val {Ω:Type*} {f: Filter Ω} (X Y : EventuallyPosi
 lemma EventuallyPositive.add_eval {Ω:Type*} {f: Filter Ω} (X Y : EventuallyPositive f) (N:Ω) : (X + Y) N = X N + Y N := rfl
 
 
+
 instance EventuallyPositive.mul {Ω:Type*} (f: Filter Ω) : Mul (EventuallyPositive f) :=
 {
   mul := fun X Y => {
@@ -189,6 +190,7 @@ instance EventuallyPositive.monoid {Ω:Type*} (f: Filter Ω) : CommMonoid (Event
     simp [mul_one]
 }
 
+
 instance EventuallyPositive.distrib {Ω:Type*} (f: Filter Ω) : Distrib (EventuallyPositive f) :=
 {
   left_distrib := by
@@ -232,15 +234,19 @@ lemma EventuallyPositive.rpow_eq_pow {Ω:Type*} {f: Filter Ω} (X : EventuallyPo
 
 
 
-def OrderOfMagnitude {Ω:Type*} (f: Filter Ω) := OrderQuotient (EventuallyPositive f)
+abbrev OrderOfMagnitude {Ω:Type*} (f: Filter Ω) := OrderQuotient (EventuallyPositive f)
 
-def EventuallyPositive.order {Ω:Type*} {f: Filter Ω} (X: EventuallyPositive f) : OrderOfMagnitude f :=
-  Quot.mk (Preorder.toSetoid) X
+abbrev EventuallyPositive.order {Ω:Type*} {f: Filter Ω} (X: EventuallyPositive f) : OrderOfMagnitude f :=
+  Preorder.quotient X
 
 def EventuallyPositive.order_eq_iff {Ω:Type*} {f: Filter Ω} (X Y: EventuallyPositive f) : X.order = Y.order ↔ X ≈ Y := by
   exact OrderQuotient.quot_eq_iff X Y
 
 def OrderOfMagnitude.ind {Ω:Type*} {f: Filter Ω} {β : OrderOfMagnitude f → Prop} (mk : ∀ (X : EventuallyPositive f), β X.order) (X : OrderOfMagnitude f) : β X := Quot.ind mk X
+
+
+def EventuallyPositive.order_le {Ω:Type*} {f: Filter Ω} (X Y: EventuallyPositive f) : X.order ≤ Y.order ↔ X ≤ Y := OrderQuotient.quot_le_iff X Y
+
 
 instance OrderOfMagnitude.add {Ω:Type*} (f: Filter Ω) : Add (OrderOfMagnitude f) :=
 {
@@ -390,6 +396,36 @@ noncomputable instance OrderOfMagnitude.commGroup {Ω:Type*} (f: Filter Ω) : Co
     apply OrderOfMagnitude.ind; intro Y
     simp only [←EventuallyPositive.order_mul, mul_comm]
 }
+
+instance OrderOfMagnitude.orderedMonoid {Ω:Type*} (f: Filter Ω) : IsOrderedMonoid (OrderOfMagnitude f) :=
+ {
+  mul_le_mul_left := by
+    apply OrderOfMagnitude.ind; intro X
+    apply OrderOfMagnitude.ind; intro Y
+    intro hXY
+    apply OrderOfMagnitude.ind; intro Z
+    simp [←EventuallyPositive.order_mul, EventuallyPositive.order_le, EventuallyPositive.le_iff] at hXY ⊢
+    obtain ⟨ C, hC, hXY ⟩ := hXY
+    refine ⟨ C, hC, ?_ ⟩
+    filter_upwards [hXY, Z.pos] with N hXY hZpos
+    calc
+      _ ≤ Z N * (C * Y N) := by
+        gcongr
+      _ = C * (Z N * Y N) := by ring
+  mul_le_mul_right := by
+    apply OrderOfMagnitude.ind; intro X
+    apply OrderOfMagnitude.ind; intro Y
+    intro hXY
+    apply OrderOfMagnitude.ind; intro Z
+    simp [←EventuallyPositive.order_mul, EventuallyPositive.order_le, EventuallyPositive.le_iff] at hXY ⊢
+    obtain ⟨ C, hC, hXY ⟩ := hXY
+    refine ⟨ C, hC, ?_ ⟩
+    filter_upwards [hXY, Z.pos] with N hXY hZpos
+    calc
+      _ ≤ (C * Y N) * Z N := by
+        gcongr
+      _ = C * (Y N * Z N) := by ring
+ }
 
 noncomputable instance OrderOfMagnitude.hasPow {Ω:Type*} (f: Filter Ω) : Pow (OrderOfMagnitude f) ℝ :=
 {
