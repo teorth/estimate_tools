@@ -59,3 +59,8 @@ instance OrderQuotient.partialOrder (α:Type*) [h: Preorder α] : PartialOrder (
     intro h1 h2
     exact Quotient.sound ((Preorder.equiv_iff x y).mpr ⟨ h1, h2 ⟩)
 }
+
+def Preorder.quotient {α:Type*} [Preorder α] (x: α) : OrderQuotient α := Quotient.mk (Preorder.toSetoid) x
+
+lemma OrderQuotient.quot_eq_iff {α:Type*} [h: Preorder α] (x y: α) : Preorder.quotient x = Preorder.quotient y ↔ x ≈ y := by
+  refine ⟨Quotient.exact, Quotient.sound ⟩
