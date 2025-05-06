@@ -2,12 +2,12 @@
 
 The hyperreals ${}^* \R$ are already defined in Mathlib, using a Lean-canonically chosen ultrafilter on $\N$.  One could consider generalizing the hyperreal construction to other filters or ultrafilters, but given the extensive library support for the Mathlib hyperreals, and the fact that it already enjoys enough of a transfer principle for most applications, we will base our theory here on the Mathlib hyperreals.
 
-\begin{definition}[Positive hyperreals]\label{pos-hyperreal}  The positive hyperreals ${}^* \R^+$ are the set of hyperreals $X \in {}^* \R$ such that $X > 0$.  (Note that $X$ could be infinitesimal or infinite).
+\begin{definition}[Positive hyperreals]\label{pos-hyperreal}\lean{PositiveHyperreal, PositiveHyperreal.lesssim, PositiveHyperreal.ll}\leanok  The positive hyperreals ${}^* \R^+$ are the set of hyperreals $X \in {}^* \R$ such that $X > 0$.  (Note that $X$ could be infinitesimal or infinite).
 
 If $X,Y$ are positive hyperreals, we write $X \lesssim Y$ if $X \leq CY$ for some real $C>0$.  We write $X \asymp Y$ if $X \lesssim Y \lesssim X$.  We write $X \ll Y$ if $X \leq \eps Y$ for all real $\eps>0$.
 \end{definition}
 
-\begin{lemma}[Lesssim order]\label{lesssim-order}\uses{pos-hyperreal}  $\lesssim$ is a pre-order on ${}^* \R^+$, with $\asymp$ the associated equivalence relation, and $\ll$ the associated strict order.  Any two positive hyperreals are comparable under $\lesssim$.
+\begin{lemma}[Lesssim order]\label{lesssim-order}\uses{pos-hyperreal}\lean{PositiveHyperreal.preorder}  $\lesssim$ is a pre-order on ${}^* \R^+$, with $\asymp$ the associated equivalence relation, and $\ll$ the associated strict order.  Any two positive hyperreals are comparable under $\lesssim$.
 \end{lemma}
 
 \begin{proof} Easy.
