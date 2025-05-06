@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1746516099.76269 "c:/Users/teort/OneDrive/Documents/GitHub/estimate_tools/blueprint/src/print.tex" "print.pdf" "print" 1746516105.19958 0
+["pdflatex"] 1746516874.12052 "c:/Users/teort/OneDrive/Documents/GitHub/estimate_tools/blueprint/src/print.tex" "print.pdf" "print" 1746516879.47047 0
   "c:/Users/teort/OneDrive/Documents/GitHub/estimate_tools/blueprint/src/print.tex" 1746213073 1113 3ac2ad798c7c44831b6518f761285b32 ""
   "c:/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1714339007 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1714346398 1528 7e12f4c0fcf5a072cebdcfbfc610f54c ""
@@ -84,12 +84,12 @@
   "c:/texlive/2024/texmf-var/web2c/xetex/xelatex.fmt" 1714346895 10850705 8b2889a2022805b7c4f0f7aa56de77f6 ""
   "c:/texlive/2024/texmf.cnf" 1714346512 713 e69b156964470283e0530f5060668171 ""
   "chapter/intro.tex" 1746460329 65 45a500264dcd06eb47eb85fc0a47a1fc ""
-  "chapter/order_of_magnitude.tex" 1746516094 6975 24727034fb9e1271428d7b1dfd6bcc2a ""
+  "chapter/order_of_magnitude.tex" 1746516869 7005 65a51633d26a5e76c2371408ccce06a4 ""
   "content.tex" 1746510605 428 94460d5391de3999c78f00089aa653c0 ""
   "macros/common.tex" 1746462430 934 bfa606199b2966aa4e07e37f296dd1b2 ""
   "macros/print.tex" 1746213073 1101 87627b2ec24fef68edc71c13f43f7bab ""
-  "print.aux" 1746516104 1762 e1c2739f1c26fcf392ac8f15d9d5cf2f "pdflatex"
-  "print.out" 1746516104 247 2c37c253d7070eb2db3a41875be76d7f "pdflatex"
+  "print.aux" 1746516879 1762 e1c2739f1c26fcf392ac8f15d9d5cf2f "pdflatex"
+  "print.out" 1746516879 247 2c37c253d7070eb2db3a41875be76d7f "pdflatex"
   "print.tex" 1746213073 1113 3ac2ad798c7c44831b6518f761285b32 ""
   (generated)
   "print.aux"
