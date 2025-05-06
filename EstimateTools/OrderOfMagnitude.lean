@@ -3,6 +3,12 @@ import EstimateTools.Order
 
 abbrev PositiveHyperreal := { x : Hyperreal // 0 < x }
 
+noncomputable def Real.toPositiveHyperreal (x : ℝ) (hx : 0 < x) : PositiveHyperreal := ⟨ x, Hyperreal.coe_pos.mpr hx ⟩
+
+@[simp]
+lemma Real.toPositiveHyperreal_coe (x:ℝ) (hx:0<x) : (Real.toPositiveHyperreal x hx : Hyperreal) = x := by
+  rfl
+
 /-- The asymptotic preorder in the positive hyperreals. -/
 def PositiveHyperreal.asym_preorder : Preorder PositiveHyperreal :=
 {
@@ -74,4 +80,32 @@ lemma PositiveHyperreal.order_le_iff {X Y : PositiveHyperreal} : X.order ≤ Y.o
 
 lemma PositiveHyperreal.order_lt_iff {X Y : PositiveHyperreal} : X.order < Y.order ↔ X.ll Y := by
   convert PositiveHyperreal.asym_preorder.quot_lt_iff _ _
-  
+
+noncomputable instance OrderOfMagnitude.linearOrder : LinearOrder OrderOfMagnitude := PositiveHyperreal.asym_preorder.quot_linear (by
+   intro X Y
+   rcases lt_or_ge (X:Hyperreal) Y with h | h
+   . left
+     refine ⟨ 1, by norm_num, ?_ ⟩
+     simp only [Hyperreal.coe_one, one_mul]
+     exact le_of_lt h
+   right
+   refine ⟨ 1, by norm_num, ?_ ⟩
+   simp only [Hyperreal.coe_one, one_mul]
+   exact h
+  )
+
+noncomputable instance OrderOfMagnitude.one : One OrderOfMagnitude := ⟨ PositiveHyperreal.order 1 ⟩
+
+@[simp]
+lemma PositiveHyperreal.order_one : (1:PositiveHyperreal).order = 1 := by
+  rfl
+
+@[simp]
+lemma Real.order_pos (x : ℝ) (hx : 0 < x) : (x.toPositiveHyperreal hx).order = 1 := by
+  rw [←PositiveHyperreal.order_one, PositiveHyperreal.order_eq_iff]
+  constructor
+  . refine ⟨ x, hx, ?_ ⟩
+    simp
+  refine ⟨ x⁻¹, by positivity, ?_ ⟩
+  have := Hyperreal.coe_pos.mpr hx
+  field_simp
