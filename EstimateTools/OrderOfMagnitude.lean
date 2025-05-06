@@ -1,19 +1,13 @@
 import Mathlib.Data.Real.Hyperreal
+import EstimateTools.Order
 
 abbrev PositiveHyperreal := { x : Hyperreal // 0 < x }
 
-instance PositiveHyperreal.lesssim : LE PositiveHyperreal :=
+/-- The asymptotic preorder in the positive hyperreals. -/
+def PositiveHyperreal.asym_preorder : Preorder PositiveHyperreal :=
 {
   le := fun X Y => ∃ C:ℝ, C > 0 ∧ (X : Hyperreal) ≤ C * Y
-}
-
-instance PositiveHyperreal.ll : LT PositiveHyperreal :=
-{
   lt := fun X Y => ∀ ε:ℝ, ε>0 → (X : Hyperreal) ≤ ε * Y
-}
-
-instance PositiveHyperreal.preorder : Preorder PositiveHyperreal :=
-{
   le_refl := fun X => ⟨1, by norm_num⟩
   le_trans := fun X Y Z => by
     rintro ⟨C1, hC1, hXY⟩ ⟨C2, hC2, hYZ⟩
@@ -54,3 +48,30 @@ instance PositiveHyperreal.preorder : Preorder PositiveHyperreal :=
       _ = (ε⁻¹:ℝ) * (ε * (Y:Hyperreal)) := by field_simp
       _ ≤ _ := by gcongr
 }
+
+abbrev PositiveHyperreal.lesssim (X Y : PositiveHyperreal) := PositiveHyperreal.asym_preorder.le X Y
+
+abbrev PositiveHyperreal.ll (X Y : PositiveHyperreal) := PositiveHyperreal.asym_preorder.lt X Y
+
+abbrev PositiveHyperreal.gtrsim (X Y : PositiveHyperreal) := PositiveHyperreal.asym_preorder.le Y X
+
+abbrev PositiveHyperreal.gg (X Y : PositiveHyperreal) := PositiveHyperreal.asym_preorder.lt Y X
+
+abbrev PositiveHyperreal.asymp (X Y : PositiveHyperreal) := X.lesssim Y ∧ Y.lesssim X
+
+abbrev OrderOfMagnitude := OrderQuotient PositiveHyperreal.asym_preorder
+
+abbrev PositiveHyperreal.order (X : PositiveHyperreal) : OrderOfMagnitude := PositiveHyperreal.asym_preorder.quotient X
+
+lemma PositiveHyperreal.order_surjective : Function.Surjective PositiveHyperreal.order := Quot.mk_surjective
+
+lemma PositiveHyperreal.order_eq_iff {X Y : PositiveHyperreal} :
+  X.order = Y.order ↔ X.asymp Y := by
+  convert PositiveHyperreal.asym_preorder.quot_eq_iff X Y
+
+lemma PositiveHyperreal.order_le_iff {X Y : PositiveHyperreal} : X.order ≤ Y.order ↔ X.lesssim Y := by
+  convert PositiveHyperreal.asym_preorder.quot_le_iff _ _
+
+lemma PositiveHyperreal.order_lt_iff {X Y : PositiveHyperreal} : X.order < Y.order ↔ X.ll Y := by
+  convert PositiveHyperreal.asym_preorder.quot_lt_iff _ _
+  

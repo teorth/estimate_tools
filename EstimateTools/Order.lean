@@ -1,10 +1,9 @@
 import Init.Core
 import Mathlib.Order.Basic
 
+-- It is important here that the preorder is not an instance, because sometimes we want to form the order quotient from a non-canonical preorder
 
--- it may possibly be inadvisable to automatically give every preorder a setoid structure; happy to take suggestions for alternatives
-
-instance Preorder.toSetoid {α: Type*} [Preorder α] : Setoid α :=
+def Preorder.toSetoid {α: Type*} (p: Preorder α) : Setoid α :=
 {
   r := fun x y => x ≤ y ∧ y ≤ x
   iseqv := {
@@ -19,22 +18,25 @@ instance Preorder.toSetoid {α: Type*} [Preorder α] : Setoid α :=
   }
 }
 
-lemma Preorder.equiv_iff {α: Type*} [Preorder α] (x y: α) : x ≈ y ↔ x ≤ y ∧ y ≤ x :=
-  Iff.rfl
+lemma Preorder.equiv_iff {α: Type*} (p:Preorder α) (x y: α) :
+  let _ := p.toSetoid
+  x ≈ y ↔ x ≤ y ∧ y ≤ x := by convert Iff.rfl
 
-def OrderQuotient (α:Type*) [h: Preorder α] := Quotient h.toSetoid
+def OrderQuotient {α:Type*} (p: Preorder α) := Quotient p.toSetoid
 
-instance OrderQuotient.partialOrder (α:Type*) [h: Preorder α] : PartialOrder (OrderQuotient α) :=
+instance OrderQuotient.partialOrder {α:Type*} (p: Preorder α) : PartialOrder (OrderQuotient p) :=
 {
   le := Quotient.lift₂ LE.le (by
     intro x₁ y₁ x₂ y₂ hx hy
-    rw [Preorder.equiv_iff] at hx hy
+    replace hx := (p.equiv_iff x₁ x₂).mp hx
+    replace hy := (p.equiv_iff y₁ y₂).mp hy
     simp only [eq_iff_iff]
     exact ⟨ fun h ↦ hx.2.trans (h.trans hy.1), fun h ↦ hx.1.trans (h.trans hy.2) ⟩
   )
   lt := Quotient.lift₂ LT.lt (by
     intro x₁ y₁ x₂ y₂ hx hy
-    rw [Preorder.equiv_iff] at hx hy
+    replace hx := (p.equiv_iff x₁ x₂).mp hx
+    replace hy := (p.equiv_iff y₁ y₂).mp hy
     simp only [eq_iff_iff]
     exact ⟨ fun h ↦ lt_of_lt_of_le (lt_of_le_of_lt hx.2 h) hy.1, fun h ↦ lt_of_lt_of_le (lt_of_le_of_lt hx.1 h) hy.2 ⟩
   )
@@ -57,12 +59,13 @@ instance OrderQuotient.partialOrder (α:Type*) [h: Preorder α] : PartialOrder (
     apply Quot.ind; intro y
     simp
     intro h1 h2
-    exact Quotient.sound ((Preorder.equiv_iff x y).mpr ⟨ h1, h2 ⟩)
+    exact Quotient.sound ((p.equiv_iff x y).mpr ⟨ h1, h2 ⟩)
 }
 
-def Preorder.quotient {α:Type*} [Preorder α] (x: α) : OrderQuotient α := Quotient.mk (Preorder.toSetoid) x
+def Preorder.quotient {α:Type*} (p: Preorder α) (x: α) : OrderQuotient p := Quotient.mk (p.toSetoid) x
 
-lemma OrderQuotient.quot_eq_iff {α:Type*} [Preorder α] (x y: α) : Preorder.quotient x = Preorder.quotient y ↔ x ≈ y := by
+lemma Preorder.quot_eq_iff {α:Type*} (p: Preorder α) (x y: α) : let _ := p.toSetoid
+  Preorder.quotient p x = Preorder.quotient p y ↔ x ≈ y := by
   refine ⟨Quotient.exact, Quotient.sound ⟩
 
 /-- for Mathlib? --/
@@ -72,6 +75,10 @@ lemma Quotient.liftBeta {α : Sort u} {s : Setoid α} {β : Sort v} (f : α → 
 lemma Quotient.lift₂Beta {α : Sort uA} {β : Sort uB} {φ : Sort uC} {s₁ : Setoid α} {s₂ : Setoid β} (f : α → β → φ) (c : ∀ (a₁ : α) (b₁ : β) (a₂ : α) (b₂ : β), a₁ ≈ a₂ → b₁ ≈ b₂ → f a₁ b₁ = f a₂ b₂) (a : α) (b : β) : Quotient.lift₂ f c (Quotient.mk s₁ a) (Quotient.mk s₂ b) = f a b := by
 convert Quotient.liftBeta _ _ _
 
-lemma OrderQuotient.quot_le_iff {α:Type*} [Preorder α] (x y: α) : Preorder.quotient x ≤ Preorder.quotient y ↔ x ≤ y := by
+lemma Preorder.quot_le_iff {α:Type*} (p:Preorder α) (x y: α) : p.quotient x ≤ p.quotient y ↔ x ≤ y := by
+  dsimp [Preorder.quotient, OrderQuotient.partialOrder]
+  rw [Quotient.lift₂Beta]
+
+lemma Preorder.quot_lt_iff {α:Type*} (p:Preorder α) (x y: α) : p.quotient x < p.quotient y ↔ x < y := by
   dsimp [Preorder.quotient, OrderQuotient.partialOrder]
   rw [Quotient.lift₂Beta]

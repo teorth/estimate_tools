@@ -7,20 +7,20 @@ The hyperreals ${}^* \R$ are already defined in Mathlib, using a Lean-canonicall
 If $X,Y$ are positive hyperreals, we write $X \lesssim Y$ if $X \leq CY$ for some real $C>0$.  We write $X \asymp Y$ if $X \lesssim Y \lesssim X$.  We write $X \ll Y$ if $X \leq \eps Y$ for all real $\eps>0$.
 \end{definition}
 
-\begin{lemma}[Lesssim order]\label{lesssim-order}\uses{pos-hyperreal}\lean{PositiveHyperreal.preorder}  $\lesssim$ is a pre-order on ${}^* \R^+$, with $\asymp$ the associated equivalence relation, and $\ll$ the associated strict order.  Any two positive hyperreals are comparable under $\lesssim$.
+\begin{lemma}[Lesssim order]\label{lesssim-order}\uses{pos-hyperreal}\lean{PositiveHyperreal.preorder}\leanok  $\lesssim$ is a pre-order on ${}^* \R^+$, with $\asymp$ the associated equivalence relation, and $\ll$ the associated strict order.  Any two positive hyperreals are comparable under $\lesssim$.
 \end{lemma}
 
-\begin{proof} Easy.
+\begin{proof}\leanok Easy.
 \end{proof}
 
-\begin{definition}[Orders of magnitude]\label{ord-def}\uses{lesssim-order} The space $\O$ of orders of magnitude is defined to be the quotient space ${}^* \R^+ / \asymp$ of the positive hyperreals by the relation of asymptotic equivalence.  For a positive hyperreal $X$, we let $\Theta(X)$ denote the order of magnitude of $X$; this is a surjection from ${}^* \R^+$ to $\O$.
+\begin{definition}[Orders of magnitude]\label{ord-def}\uses{lesssim-order}\lean{OrderOfMagnitude,PositiveHyperreal.order,PositiveHyperreal.order_surjective}\leanok The space $\O$ of orders of magnitude is defined to be the quotient space ${}^* \R^+ / \asymp$ of the positive hyperreals by the relation of asymptotic equivalence.  For a positive hyperreal $X$, we let $\Theta(X)$ denote the order of magnitude of $X$; this is a surjection from ${}^* \R^+$ to $\O$.
 \end{definition}
 
 
-\begin{lemma}[Theta kernel]\label{theta-kernel}\uses{ord-def} For positive hyperreals $X,Y$, we have $\Theta(X) = \Theta(Y)$ if and only if $X \asymp Y$.
+\begin{lemma}[Theta kernel]\label{theta-kernel}\uses{ord-def}\lean{PositiveHyperreal.order_eq_iff, PositiveHyperreal.order_le_iff, PositiveHyperreal.order_lt_iff}\leanok For positive hyperreals $X,Y$, we have $\Theta(X) = \Theta(Y)$ if and only if $X \asymp Y$.  Similarly, we have $\Theta(X) < \Theta(Y)$ if and only if $X \ll Y$, and $\Theta(X) \leq \Theta(Y)$ if and only if $X \lesssim Y$.
 \end{lemma}
 
-\begin{proof} Easy.
+\begin{proof}\leanok Easy.
 \end{proof}
 
 \begin{definition}[Ordering on magnitudes]\label{ord-mag-def}\uses{theta-kernel}  We linearly order $\O$ by the requirement that $\Theta(X) \leq \Theta(Y)$ if and only if $X \lesssim Y$, and  $\Theta(X) < \Theta(Y)$ if and only if $X \ll Y$.
