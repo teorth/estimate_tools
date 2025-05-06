@@ -101,7 +101,7 @@ lemma PositiveHyperreal.order_one : (1:PositiveHyperreal).order = 1 := by
   rfl
 
 @[simp]
-lemma Real.order_pos (x : ℝ) (hx : 0 < x) : (x.toPositiveHyperreal hx).order = 1 := by
+lemma Real.order_of_pos (x : ℝ) (hx : 0 < x) : (x.toPositiveHyperreal hx).order = 1 := by
   rw [←PositiveHyperreal.order_one, PositiveHyperreal.order_eq_iff]
   constructor
   . refine ⟨ x, hx, ?_ ⟩
