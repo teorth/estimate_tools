@@ -65,6 +65,8 @@ abbrev PositiveHyperreal.gg (X Y : PositiveHyperreal) := PositiveHyperreal.asym_
 
 abbrev PositiveHyperreal.asymp (X Y : PositiveHyperreal) := X.lesssim Y ∧ Y.lesssim X
 
+
+
 abbrev OrderOfMagnitude := OrderQuotient PositiveHyperreal.asym_preorder
 
 abbrev PositiveHyperreal.order (X : PositiveHyperreal) : OrderOfMagnitude := PositiveHyperreal.asym_preorder.quotient X
@@ -109,3 +111,42 @@ lemma Real.order_of_pos (x : ℝ) (hx : 0 < x) : (x.toPositiveHyperreal hx).orde
   refine ⟨ x⁻¹, by positivity, ?_ ⟩
   have := Hyperreal.coe_pos.mpr hx
   field_simp
+
+noncomputable instance OrderOfMagnitude.add : Add OrderOfMagnitude := {
+  add := Quotient.lift₂ (fun x y => (x + y).order)
+    (by
+     intro X Y Z W hXZ hYW
+     simp [PositiveHyperreal.order_eq_iff]
+     replace hXZ := (PositiveHyperreal.asym_preorder.equiv_iff X Z).mp hXZ
+     replace hYW := (PositiveHyperreal.asym_preorder.equiv_iff Y W).mp hYW
+     have hX := X.property
+     have hY := Y.property
+     have hZ := Z.property
+     have hW := W.property
+     constructor
+     . obtain ⟨ C1, hC1, h1 ⟩ := hXZ.1
+       obtain ⟨ C2, hC2, h2 ⟩ := hYW.1
+       refine ⟨ max C1 C2, by positivity, ?_ ⟩
+       simp only [Positive.coe_add, Hyperreal.coe_max]
+       calc
+         _ ≤ C1 * (Z:Hyperreal) + C2 * (W:Hyperreal) := by
+           gcongr
+         _ ≤ (max C1 C2) * (Z:Hyperreal) + (max C1 C2) * (W:Hyperreal) := by
+           gcongr
+           . simp only [Hyperreal.coe_max, le_sup_left]
+           simp only [Hyperreal.coe_max, le_sup_right]
+         _ = _ := by simp [Hyperreal.coe_max, mul_add]
+     obtain ⟨ C1, hC1, h1 ⟩ := hXZ.2
+     obtain ⟨ C2, hC2, h2 ⟩ := hYW.2
+     refine ⟨ max C1 C2, by positivity, ?_ ⟩
+     simp only [Positive.coe_add, Hyperreal.coe_max]
+     calc
+       _ ≤ C1 * (X:Hyperreal) + C2 * (Y:Hyperreal) := by
+         gcongr
+       _ ≤ (max C1 C2) * (X:Hyperreal) + (max C1 C2) * (Y:Hyperreal) := by
+         gcongr
+         . simp only [Hyperreal.coe_max, le_sup_left]
+         simp only [Hyperreal.coe_max, le_sup_right]
+       _ = _ := by simp [Hyperreal.coe_max, mul_add]
+     )
+}

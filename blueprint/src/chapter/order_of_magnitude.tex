@@ -35,7 +35,7 @@ If $X,Y$ are positive hyperreals, we write $X \lesssim Y$ if $X \leq CY$ for som
 \begin{proof}\leanok Easy.
 \end{proof}
 
-\begin{definition}[Arithmetic on magnitudes]\label{mag-arith}\uses{theta-kernel}  We define addition on $\O$ by the requirement that $\Theta(X) + \Theta(Y) = \Theta(X+Y)$ for positive hyperreals $X,Y$.  Similarly we define multiplication, inverse, and division.  We define real exponentiation by requiring that $\Theta(X^\alpha) = \Theta(X)^\alpha$ for positive hyperreals $X$ and real $\alpha$.
+\begin{definition}[Arithmetic on magnitudes]\label{mag-arith}\uses{theta-kernel}\lean{OrderOfMagnitude.add}  We define addition on $\O$ by the requirement that $\Theta(X) + \Theta(Y) = \Theta(X+Y)$ for positive hyperreals $X,Y$.  Similarly we define multiplication, inverse, and division.  We define real exponentiation by requiring that $\Theta(X^\alpha) = \Theta(X)^\alpha$ for positive hyperreals $X$ and real $\alpha$.
 \end{definition}
 
 \begin{lemma}[Addition is tropical]\label{tropical-add}\uses{mag-arith} For all orders of magnitude $\Theta(X), \Theta(Y)$, we have $\Theta(X) + \Theta(Y) = \max(\Theta(X), \Theta(Y))$.
@@ -73,8 +73,9 @@ If $X,Y$ are positive hyperreals, we write $X \lesssim Y$ if $X \leq CY$ for som
 \begin{proof} Straightforward.
 \end{proof}
 
-\begin{definition}[Log-order of magnitude] \label{log-order-def}\uses{mag-arith}  We define $\log \O$ to be the collection of formal logarithms of magnitude $\log(\Theta(X))$ of orders of magnitude $\Theta(X)$.  $1$, multiplication, and exponentiation of orders of magnitude become $0$, addition, and scalar multiplication; and order is preserved. By definition, $\log \colon \O \to \log \O$ is a bijection.
+\begin{definition}[Log-order of magnitude] \label{log-order-def}\uses{mag-arith}  We define $\log \O$ to be the collection of formal logarithms of magnitude $\log(\Theta(X))$ of orders of magnitude $\Theta(X)$.  $1$, multiplication, and exponentiation of orders of magnitude become $0$, addition, and scalar multiplication; and order is preserved. By definition, $\log \colon \O \to \log \O$ is a order isomorphism.
 \end{definition}
+
 
 \begin{lemma}[Log of addition]\label{log-add}\uses{log-order-def}  For orders of magnitude $\Theta(X), \Theta(Y)$, we have $\log(\Theta(X) + \Theta(Y)) = \max(\log(\Theta(X)), \log(\Theta(Y)))$.
 \end{lemma}
@@ -88,8 +89,18 @@ If $X,Y$ are positive hyperreals, we write $X \lesssim Y$ if $X \leq CY$ for som
 \begin{proof}\uses{mag-arith, power-law}. Straightforward from Lemma \ref{mag-arith} and Lemma \ref{power-law}.
 \end{proof}
 
+
 \begin{lemma}[Ordered vector space]\label{ord-vec}\uses{log-order-def} $\log \O$ is a linearly ordered real vector space.
 \end{lemma}
 
 \begin{proof}\uses{log-mult} Straightforward from Lemma \ref{log-mult}.
 \end{proof}
+
+\begin{lemma}[Completeness]\label{completeness} Let $I_1 \supset I_2 \supset \dots$ be a decreasing sequence of non-empty intervals in $\O$.  Then $\bigcap_{n=1}^\infty I_n$ is non-empty.
+\end{lemma}
+
+\begin{proof} Tricky...
+\end{proof}
+
+\begin{corollary}[Completeness]\label{ord-completeness} Let $I_1 \supset I_2 \supset \dots$ be a decreasing sequence of non-empty intervals in $\log \O$.  Then $\bigcap_{n=1}^\infty I_n$ is non-empty.
+\end{lemma}
