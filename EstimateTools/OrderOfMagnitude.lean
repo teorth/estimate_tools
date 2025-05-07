@@ -65,8 +65,6 @@ abbrev PositiveHyperreal.gg (X Y : PositiveHyperreal) := PositiveHyperreal.asym_
 
 abbrev PositiveHyperreal.asymp (X Y : PositiveHyperreal) := X.lesssim Y ∧ Y.lesssim X
 
-
-
 abbrev OrderOfMagnitude := OrderQuotient PositiveHyperreal.asym_preorder
 
 abbrev PositiveHyperreal.order (X : PositiveHyperreal) : OrderOfMagnitude := PositiveHyperreal.asym_preorder.quotient X
@@ -150,3 +148,9 @@ noncomputable instance OrderOfMagnitude.add : Add OrderOfMagnitude := {
        _ = _ := by simp [Hyperreal.coe_max, mul_add]
      )
 }
+
+@[simp]
+lemma PositiveHyperreal.order_add (X Y: PositiveHyperreal) : (X+Y).order = X.order + Y.order := by
+  apply Quotient.sound
+  convert Setoid.refl (X + Y)
+
