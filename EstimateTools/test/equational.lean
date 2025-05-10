@@ -15,10 +15,10 @@ variable {M : Type _} [Magma M]
 /-
 Human-readable proof that $x = (yx)((xz)z)$ (equation 1689) implies the singleton law (equation 2). -/
 
-/-
-We denote $$S_z(x) = (xz)z$$ and $$f(x,y) = xS_y(x) = x((xy)y)$$.-/
-
+/- We denote $$S_z(x) = (xz)z$$ ...-/
 abbrev S (z:M) (x:M) : M := (x ◇ z) ◇ z
+
+/- ... and $$f(x,y) = xS_y(x) = x((xy)y)$$.-/
 abbrev f (x y:M) : M := x ◇ S y x
 
 lemma f_eq (x y:M) : f x y = x ◇ ((x ◇ y) ◇ y) := rfl
@@ -39,7 +39,6 @@ lemma Lemma_1 (h: Equation1689 M) (a b c:M) : S b a = a ◇ f b c := by
 -- *Proof:* For $$x=S_b(a)$$ and $$y\in M a$$ we have $$yx=a$$.
   have claim (y:M)  (hy: ∃ z:M, y = z ◇ a): y ◇ x = a := by exact claim h a b y hy
 /- Then apply the main equation to these values of $$x,y$$ [Note: take y to be an arbitrary element of Ma, e.g. a ◇ a], to get [for any z] S_b(a) = aS_z(S_b(a)) -/
-
   have h2 (z : M) : S b a = a ◇ S z (S b a) := by
     set y := a ◇ a
     have hy : ∃ z, y = z ◇ a := by
@@ -57,8 +56,7 @@ lemma Lemma_1 (h: Equation1689 M) (a b c:M) : S b a = a ◇ f b c := by
     _ = b := by
       exact Eq.symm (main_eq h b (a ◇ b) c)
 
-/-  to simplify the right-hand side above and get, as announced,
-
+/-  ... to simplify the right-hand side above and get, as announced,
 S_b(a) = a((S_b(a)z)z) = a(bz) = a f(b,c). -/
   exact Eq.rec (motive := fun a_1 t ↦ (a ◇ b) ◇ b = a ◇ (a_1 ◇ ((b ◇ c) ◇ c))) (h2 ((b ◇ c) ◇ c)) h3
 
@@ -69,9 +67,9 @@ lemma Lemma2 (h: Equation1689 M) (a:M) : ∃ b c d, f b c = S d a := by
 /- *Proof:* By definition of $$f$$ one has $$f(b,c)=bS_c(b)$$.-/
   have h1 (b c :M) : f b c = b ◇ (S c b) := rfl
 /-  Taking $$b=S_x(a)$$ for some $$x$$, -/
-  set b := S a a
+  set b := S a a  -- arbitrarily pick x to be a
   use b
-  set c := a
+  set c := a  -- arbitrarily pick c to be a
   use c
 
 /- and rewriting $$b=aS_c(b)$$ using the first equation in the proof of Lemma 1 -/
@@ -79,14 +77,14 @@ lemma Lemma2 (h: Equation1689 M) (a:M) : ∃ b c d, f b c = S d a := by
     convert (claim h _ _ _ ?_).symm
     exact Exists.intro (a ◇ a) (h a a a)
 
-/- we find f(b,c) = (aS_c(b))S_c(b),
+/- we find f(b,c) = (aS_c(b))S_c(b)...
 -/
   have h3 : f b c = (a ◇ S c b) ◇ S c b := by
     rw [h1]
     exact congrFun (congrArg Magma.op h2) (S c b)
 
 /-
-which has the desired form for $$d=S_c(b)$$.  (Thus, the statement actually holds for all $$a,c$$.)
+... which has the desired form for $$d=S_c(b)$$.  (Thus, the statement actually holds for all $$a,c$$.)
 -/
   exact Exists.intro ((((a ◇ a) ◇ a) ◇ a) ◇ a) h3
 
@@ -96,9 +94,8 @@ lemma Lemma3 (h:Equation1689 M) (a:M) : ∃ e, S e a = a := by
   let a_2 := a ◇ a
   let a_3 := a_2 ◇ a
 /- *Proof:* Left-multiply the equation in Lemma 1 by $$a^3=(a^2)a$$ to get (the first equality below comes from the main equation)
-```math
+
 a = ((a^2)a)S_b(a) = a^3 (af(b,c)) .
-```
 -/
   have h1 (b c:M) : a = a_3 ◇ (a ◇ f b c) := calc
     a = (a_2 ◇ a) ◇ S b a := by
@@ -107,10 +104,10 @@ a = ((a^2)a)S_b(a) = a^3 (af(b,c)) .
       congr
       exact Lemma_1 h a b c
 /-
-Take $$b,c,d$$ as in Lemma 2 to rewrite $$af(b,c)=aS_d(a)=f(a,d)$$.
--/
+Take $$b,c,d$$ as in Lemma 2... -/
   obtain ⟨ b,c,d, lemma2 ⟩ := Lemma2 h a
 
+/-  to rewrite $$af(b,c)=aS_d(a)=f(a,d)$$.-/
   have h2 : a ◇ f b c = f a d := calc
     _ = a ◇ S d a := by exact congrArg (Magma.op a) lemma2
     _ = f a d := by exact rfl
@@ -118,11 +115,12 @@ Take $$b,c,d$$ as in Lemma 2 to rewrite $$af(b,c)=aS_d(a)=f(a,d)$$.
 /- On the other hand, Lemma 1 with $$a=b$$ and $$c$$ replaced by $$d$$ implies $$a^3 = a f(a,d)$$ -/
   have h3 : a_3 = a ◇ f a d := by exact Lemma_1 h a a d
 
-/-  so overall we get $$a=(af(a,d))f(a,d)$$, which is as desired for $$e=f(a,d)$$. -/
+/-  so overall we get $$a=(af(a,d))f(a,d)$$... -/
   have h4 : a= (a ◇ f a d) ◇ f a d := by
     rw [←h3]
     exact Eq.rec (motive := fun a_1 t ↦ a = ((a ◇ a) ◇ a) ◇ a_1) (h1 b c) h2
 
+/-  ...which is as desired for $$e=f(a,d)$$. -/
   exact Exists.intro (a ◇ ((a ◇ d) ◇ d)) (Eq.rec (motive := fun a_1 t ↦ a_1 = a) (Eq.refl a) h4)
 
 
@@ -143,7 +141,7 @@ theorem main (h : Equation1689 M) : Equation2 M := by
     convert main_eq h _ _ a
     exact h1 a y
 
-/- Thus $$ab=((da)c)b=c$$ for any $$a,b,c,d$$, thus $$a=bc=d$$ for any $$a,b,c,d$$.-/
+/- Thus $$ab=((da)c)b=c$$ for any $$a,b,c,d$$...-/
   have h3 (a b c d:M) : a ◇ b = c := calc
     a ◇ b = ((d ◇ a) ◇ c) ◇ b := by
       exact
@@ -151,4 +149,5 @@ theorem main (h : Equation1689 M) : Equation2 M := by
           (h2 c a d)
     _ = c := by exact h2 b c (d ◇ a)
 
+/- thus $$a=bc=d$$ for any $$a,b,c,d$$.-/
   exact fun x y ↦ Eq.rec (motive := fun a t ↦ a = y) (h3 (y ◇ x) y y y) (h2 y x y)
