@@ -25,24 +25,20 @@ lemma f_eq (x y:M) : f x y = x ◇ ((x ◇ y) ◇ y) := rfl
 
 
 
-/-  The main equation is $$x=(yx)S_z(x)$$. -/
-
+/--  The main equation is $$x=(yx)S_z(x)$$. -/
 lemma main_eq (h: Equation1689 M) (x y z:M) : x = (y ◇ x) ◇ S z x := h x y z
 
+/-- For $$x=S_b(a)$$ and $$y\in M a$$ we have $$yx=a$$. -/
 lemma claim (h: Equation1689 M) (a b y:M) (hy: ∃ z:M, y = z ◇ a) : y ◇ (S b a) = a := by
   obtain ⟨z, rfl⟩ := hy
   exact Eq.rec (motive := fun a_1 t ↦ a_1 = a) (Eq.refl a) (h a z b)
 
-/- **Lemma 1:** For any $$a,b,c$$, one has $$S_b(a) = a f(b,c)$$. -/
-
+/-- **Lemma 1:** For any $$a,b,c$$, one has $$S_b(a) = a f(b,c)$$. -/
 lemma Lemma_1 (h: Equation1689 M) (a b c:M) : S b a = a ◇ f b c := by
   set x := S b a
 -- *Proof:* For $$x=S_b(a)$$ and $$y\in M a$$ we have $$yx=a$$.
   have claim (y:M)  (hy: ∃ z:M, y = z ◇ a): y ◇ x = a := by exact claim h a b y hy
-/- Then apply the main equation to these values of $$x,y$$ [Note: take y to be an arbitrary element of Ma, e.g. a ◇ a], to get [for any z]
-```math
-S_b(a) = aS_z(S_b(a)) .
-``` -/
+/- Then apply the main equation to these values of $$x,y$$ [Note: take y to be an arbitrary element of Ma, e.g. a ◇ a], to get [for any z] S_b(a) = aS_z(S_b(a)) -/
 
   have h2 (z : M) : S b a = a ◇ S z (S b a) := by
     set y := a ◇ a
@@ -52,10 +48,7 @@ S_b(a) = aS_z(S_b(a)) .
       Eq.rec (motive := fun a_1 t ↦ (a ◇ b) ◇ b = a_1 ◇ ((((a ◇ b) ◇ b) ◇ z) ◇ z))
         (h ((a ◇ b) ◇ b) (a ◇ a) z) (claim (a ◇ a) hy)
 
-/- Then set $$z=S_c(b)$$ and note that $$S_b(a)z = ((ab)b)((bc)c) = b$$ to simplify the right-hand side above and get, as announced,
-```math
-S_b(a) = a((S_b(a)z)z) = a(bz) = a f(b,c) .
-```
+/- Then set $$z=S_c(b)$$ and note that $$S_b(a)z = ((ab)b)((bc)c) = b$$...
 -/
   set z := S c b
   have h3 : S b a ◇ z = b := calc
@@ -64,10 +57,13 @@ S_b(a) = a((S_b(a)z)z) = a(bz) = a f(b,c) .
     _ = b := by
       exact Eq.symm (main_eq h b (a ◇ b) c)
 
+/-  to simplify the right-hand side above and get, as announced,
+
+S_b(a) = a((S_b(a)z)z) = a(bz) = a f(b,c). -/
   exact Eq.rec (motive := fun a_1 t ↦ (a ◇ b) ◇ b = a ◇ (a_1 ◇ ((b ◇ c) ◇ c))) (h2 ((b ◇ c) ◇ c)) h3
 
 
-/- **Lemma 2** For all $$a$$ there exists $$b,c,d$$ such that $$f(b,c)=S_d(a)$$.
+/-- **Lemma 2** For all $$a$$ there exists $$b,c,d$$ such that $$f(b,c)=S_d(a)$$.
 -/
 lemma Lemma2 (h: Equation1689 M) (a:M) : ∃ b c d, f b c = S d a := by
 /- *Proof:* By definition of $$f$$ one has $$f(b,c)=bS_c(b)$$.-/
@@ -77,29 +73,25 @@ lemma Lemma2 (h: Equation1689 M) (a:M) : ∃ b c d, f b c = S d a := by
   use b
   set c := a
   use c
-/- lemma claim (h: Equation1689 M) (a b y:M) (hy: ∃ z:M, y = z ◇ a) : y ◇ (S b a) = a := by
--/
 
+/- and rewriting $$b=aS_c(b)$$ using the first equation in the proof of Lemma 1 -/
   have h2 : b = a ◇ S c b := by
     convert (claim h _ _ _ ?_).symm
     exact Exists.intro (a ◇ a) (h a a a)
 
-/- and rewriting $$b=aS_c(b)$$ using the first equation in the proof of Lemma 1, we find
-```math
-f(b,c) = (aS_c(b))S_c(b) ,
-```
+/- we find f(b,c) = (aS_c(b))S_c(b),
 -/
   have h3 : f b c = (a ◇ S c b) ◇ S c b := by
     rw [h1]
     exact congrFun (congrArg Magma.op h2) (S c b)
+
 /-
 which has the desired form for $$d=S_c(b)$$.  (Thus, the statement actually holds for all $$a,c$$.)
 -/
   exact Exists.intro ((((a ◇ a) ◇ a) ◇ a) ◇ a) h3
 
-/- **Lemma 3** For all $$a$$ there exists $$e$$ such that $$S_e(a) = a$$.
+/-- **Lemma 3** For all $$a$$ there exists $$e$$ such that $$S_e(a) = a$$.
 -/
-
 lemma Lemma3 (h:Equation1689 M) (a:M) : ∃ e, S e a = a := by
   let a_2 := a ◇ a
   let a_3 := a_2 ◇ a
@@ -160,7 +152,3 @@ theorem main (h : Equation1689 M) : Equation2 M := by
     _ = c := by exact h2 b c (d ◇ a)
 
   exact fun x y ↦ Eq.rec (motive := fun a t ↦ a = y) (h3 (y ◇ x) y y y) (h2 y x y)
-
-
-````
--/
