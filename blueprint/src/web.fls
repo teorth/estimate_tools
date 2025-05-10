@@ -144,7 +144,12 @@ INPUT ./content.tex
 INPUT ./content.tex
 INPUT ./content.tex
 INPUT content.tex
+INPUT ./chapter/intro.tex
+INPUT ./chapter/intro.tex
 INPUT chapter/intro.tex
+INPUT ./chapter/order_of_magnitude.tex
+INPUT ./chapter/order_of_magnitude.tex
+INPUT chapter/order_of_magnitude.tex
 INPUT web.aux
 INPUT ./web.out
 INPUT ./web.out

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.4.28)  5 MAY 2025 08:52
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.4.28)  10 MAY 2025 06:35
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -348,13 +348,582 @@ Package hyperref Warning: Rerun to get /PageLabels entry.
 
 ] [1] (./content.tex (./chapter/intro.tex
 Chapter 1.
-)) [1
+) (./chapter/order_of_magnitude.tex [1
 
-] (./web.aux)
+]
+Chapter 2.
+./chapter/order_of_magnitude.tex:5: Undefined control sequence.
+l.5 ...itive hyperreals]\label{pos-hyperreal}\lean
+                                                  {PositiveHyperreal, Positi...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:5: Undefined control sequence.
+l.5 ...rreal.lesssim, PositiveHyperreal.ll}\leanok
+                                                    The positive hyperreals ...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (7.9987pt too wide) in paragraph at lines 5--6
+[]\TU/lmr/bx/n/10 Definition 1 \TU/lmr/m/n/10 (Positive hyperreals)\TU/lmr/bx/n/10 . \TU/lmr/m/n/10 PositiveHyperreal, PositiveHyperreal.lesssim,
+ []
+
+./chapter/order_of_magnitude.tex:10: Undefined control sequence.
+l.10 ...}[Lesssim order]\label{lesssim-order}\uses
+                                                  {pos-hyperreal}\lean{Posit...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:10: Undefined control sequence.
+l.10 ...el{lesssim-order}\uses{pos-hyperreal}\lean
+                                                  {PositiveHyperreal.asym_pr...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:10: Missing $ inserted.
+<inserted text> 
+                $
+l.10 ...os-hyperreal}\lean{PositiveHyperreal.asym_
+                                                  preorder}\leanok  $\lesssi...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+./chapter/order_of_magnitude.tex:10: Extra }, or forgotten $.
+l.10 ...eal}\lean{PositiveHyperreal.asym_preorder}
+                                                  \leanok  $\lesssim$ is a p...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./chapter/order_of_magnitude.tex:10: Undefined control sequence.
+l.10 ...an{PositiveHyperreal.asym_preorder}\leanok
+                                                    $\lesssim$ is a pre-orde...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:10: Missing $ inserted.
+<inserted text> 
+                $
+l.10 ...Hyperreal.asym_preorder}\leanok  $\lesssim
+                                                  $ is a pre-order on ${}^* ...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+./chapter/order_of_magnitude.tex:11: Missing } inserted.
+<inserted text> 
+                }
+l.11 \end{lemma}
+                
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./chapter/order_of_magnitude.tex:13: Undefined control sequence.
+<recently read> \leanok 
+                        
+l.13 \begin{proof}\leanok
+                          Easy.
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:16: Undefined control sequence.
+l.16 ...}[Orders of magnitude]\label{ord-def}\uses
+                                                  {lesssim-order}\lean{Order...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:16: Undefined control sequence.
+l.16 ...e]\label{ord-def}\uses{lesssim-order}\lean
+                                                  {OrderOfMagnitude,Positive...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:16: Missing $ inserted.
+<inserted text> 
+                $
+l.16 ...veHyperreal.order,PositiveHyperreal.order_
+                                                  surjective}\leanok The spa...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+./chapter/order_of_magnitude.tex:16: Extra }, or forgotten $.
+l.16 ....order,PositiveHyperreal.order_surjective}
+                                                  \leanok The space $\O$ of ...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./chapter/order_of_magnitude.tex:16: Undefined control sequence.
+l.16 ...PositiveHyperreal.order_surjective}\leanok
+                                                   The space $\O$ of orders ...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+./chapter/order_of_magnitude.tex:16: LaTeX Error: \mathcal allowed only in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.16 ...eal.order_surjective}\leanok The space $\O
+                                                  $ of orders of magnitude i...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+./chapter/order_of_magnitude.tex:16: Missing $ inserted.
+<inserted text> 
+                $
+l.16 ...e is defined to be the quotient space ${}^
+                                                  * \R^+ / \asymp$ of the po...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (533.05202pt too wide) in paragraph at lines 16--17
+[]\TU/lmr/bx/n/10 Definition 3 \TU/lmr/m/n/10 (Orders of magnitude)\TU/lmr/bx/n/10 . \TU/lmr/m/n/10 lesssim-orderOrderOfMagnitude,PositiveHyperreal.order,PositiveHyperreal.order$[]\OML/cmm/m/it/10 urjectiveThespace$\TU/lmr/m/n/10 O$\OML/cmm/m/it/10 ofordersofmagnitudeisdefinedtobethequotientspace$$[]\U/msb/m/n/10 R[]\OML/cmm/m/it/10 = \OMS/cmsy/m/n/10 ^^P$
+ []
+
+./chapter/order_of_magnitude.tex:17: Missing } inserted.
+<inserted text> 
+                }
+l.17 \end{definition}
+                     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./chapter/order_of_magnitude.tex:20: Undefined control sequence.
+l.20 ...ma}[Theta kernel]\label{theta-kernel}\uses
+                                                  {ord-def}\lean{PositiveHyp...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:20: Undefined control sequence.
+l.20 ...el]\label{theta-kernel}\uses{ord-def}\lean
+                                                  {PositiveHyperreal.order_e...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:20: Missing $ inserted.
+<inserted text> 
+                $
+l.20 ...ses{ord-def}\lean{PositiveHyperreal.order_
+                                                  eq_iff, PositiveHyperreal....
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+./chapter/order_of_magnitude.tex:20: Extra }, or forgotten $.
+l.20 ...er_le_iff, PositiveHyperreal.order_lt_iff}
+                                                  \leanok For positive hyper...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./chapter/order_of_magnitude.tex:20: Undefined control sequence.
+l.20 ...ff, PositiveHyperreal.order_lt_iff}\leanok
+                                                   For positive hyperreals $...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:20: Missing $ inserted.
+<inserted text> 
+                $
+l.20 ...positive hyperreals $X,Y$, we have $\Theta
+                                                  (X) = \Theta(Y)$ if and on...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (394.505pt too wide) in paragraph at lines 20--21
+[]\TU/lmr/bx/n/10 Lemma 4 \TU/lmr/m/n/10 (Theta kernel)\TU/lmr/bx/n/10 . \TU/lmr/m/it/10 ord-defPositiveHyperreal.order$[]\OML/cmm/m/it/10 q[]ff; PositiveHyperreal:order[]e[]ff; PositiveHyperreal:order[]t[]ffForpositivehyperreals$\TU/lmr/m/it/10 X,Y$\OML/cmm/m/it/10 ; wehave$$\OT1/cmr/m/n/10 ^^B(\OML/cmm/m/it/10 X\OT1/cmr/m/n/10 ) =
+ []
+
+./chapter/order_of_magnitude.tex:21: Missing } inserted.
+<inserted text> 
+                }
+l.21 \end{lemma}
+                
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./chapter/order_of_magnitude.tex:23: Undefined control sequence.
+<recently read> \leanok 
+                        
+l.23 \begin{proof}\leanok
+                          Easy.
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:26: Undefined control sequence.
+l.26 ...ing on magnitudes]\label{ord-mag-def}\uses
+                                                  {theta-kernel}\lean{OrderO...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:26: Undefined control sequence.
+l.26 ...label{ord-mag-def}\uses{theta-kernel}\lean
+                                                  {OrderOfMagnitude.linearOr...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:26: Undefined control sequence.
+l.26 ...\lean{OrderOfMagnitude.linearOrder}\leanok
+                                                    We linearly order $\O$ b...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (37.1467pt too wide) in paragraph at lines 26--27
+[]\TU/lmr/bx/n/10 Definition 5 \TU/lmr/m/n/10 (Ordering on magnitudes)\TU/lmr/bx/n/10 . \TU/lmr/m/n/10 theta-kernelOrderOfMagnitude.linearOrderWe
+ []
+
+./chapter/order_of_magnitude.tex:29: Undefined control sequence.
+l.29 \begin{definition}[One]\label{one-def}\uses
+                                                {ord-def}\label{OrderOfMagni...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:29: Undefined control sequence.
+l.29 ...rd-def}\label{OrderOfMagnitude.one}\leanok
+                                                   We define $1 := \Theta(1)$.
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+[2
+
+]
+./chapter/order_of_magnitude.tex:32: Undefined control sequence.
+l.32 ...[Constants trivial]\label{const-triv}\uses
+                                                  {one-def}\lean{Real.order_...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:32: Undefined control sequence.
+l.32 ...vial]\label{const-triv}\uses{one-def}\lean
+                                                  {Real.order_of_pos}\leanok...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:32: Missing $ inserted.
+<inserted text> 
+                $
+l.32 ...const-triv}\uses{one-def}\lean{Real.order_
+                                                  of_pos}\leanok We have $\T...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+./chapter/order_of_magnitude.tex:32: Extra }, or forgotten $.
+l.32 ...riv}\uses{one-def}\lean{Real.order_of_pos}
+                                                  \leanok We have $\Theta(C)...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./chapter/order_of_magnitude.tex:32: Undefined control sequence.
+l.32 ...es{one-def}\lean{Real.order_of_pos}\leanok
+                                                   We have $\Theta(C) = 1$ f...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:32: Missing $ inserted.
+<inserted text> 
+                $
+l.32 ...{Real.order_of_pos}\leanok We have $\Theta
+                                                  (C) = 1$ for all real $C>0$.
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+./chapter/order_of_magnitude.tex:33: Missing } inserted.
+<inserted text> 
+                }
+l.33 \end{lemma}
+                
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./chapter/order_of_magnitude.tex:35: Undefined control sequence.
+<recently read> \leanok 
+                        
+l.35 \begin{proof}\leanok
+                          Easy.
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:38: Undefined control sequence.
+l.38 ...metic on magnitudes]\label{mag-arith}\uses
+                                                  {theta-kernel}\lean{OrderO...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:38: Undefined control sequence.
+l.38 ...]\label{mag-arith}\uses{theta-kernel}\lean
+                                                  {OrderOfMagnitude.add}  We...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:41: Undefined control sequence.
+l.41 ...tion is tropical]\label{tropical-add}\uses
+                                                  {mag-arith} For all orders...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (19.07957pt too wide) in paragraph at lines 41--42
+[]\TU/lmr/bx/n/10 Lemma 9 \TU/lmr/m/n/10 (Addition is tropical)\TU/lmr/bx/n/10 . \TU/lmr/m/it/10 mag-arith For all orders of magnitude $\OT1/cmr/m/n/10 ^^B(\OML/cmm/m/it/10 X\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 ^^B(\OML/cmm/m/it/10 Y\OT1/cmr/m/n/10 )$\TU/lmr/m/it/10 ,
+ []
+
+./chapter/order_of_magnitude.tex:47: Undefined control sequence.
+l.47 ...mmutative monoid]\label{add-comm-mon}\uses
+                                                  {tropical-add} $\O$ is an ...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:53: Undefined control sequence.
+l.53 ...tative semiring]\label{comm-semiring}\uses
+                                                  {mag-arith} $\O$ is a mult...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:56: Undefined control sequence.
+<recently read> \uses 
+                      
+l.56 \begin{proof}\uses
+                       {tropical-add} Easy.
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:59: Undefined control sequence.
+l.59 ...n{lemma}[Power laws]\label{power-law}\uses
+                                                  {mag-arith}  Let $\Theta(X...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:76: Undefined control sequence.
+l.76 ...r of magnitude] \label{log-order-def}\uses
+                                                  {mag-arith}  We define $\l...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+[3]
+./chapter/order_of_magnitude.tex:80: Undefined control sequence.
+l.80 ...emma}[Log of addition]\label{log-add}\uses
+                                                  {log-order-def}  For order...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (5.5929pt too wide) in paragraph at lines 80--81
+[]\TU/lmr/bx/n/10 Lemma 14 \TU/lmr/m/n/10 (Log of addition)\TU/lmr/bx/n/10 . \TU/lmr/m/it/10 log-order-def For orders of magnitude $\OT1/cmr/m/n/10 ^^B(\OML/cmm/m/it/10 X\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 ^^B(\OML/cmm/m/it/10 Y\OT1/cmr/m/n/10 )$\TU/lmr/m/it/10 ,
+ []
+
+./chapter/order_of_magnitude.tex:83: Undefined control sequence.
+<recently read> \uses 
+                      
+l.83 \begin{proof}\uses
+                       {tropical-add} Immediate from Lemma \ref{tropical-add}.
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+LaTeX Warning: Reference `tropical-add' on page 4 undefined on input line 83.
+
+
+Overfull \hbox (14.80621pt too wide) in paragraph at lines 86--87
+\TU/lmr/m/it/10 any real $\OML/cmm/m/it/10 C > \OT1/cmr/m/n/10 0$\TU/lmr/m/it/10 ), $[]\OT1/cmr/m/n/10 (^^B(\OML/cmm/m/it/10 X\OT1/cmr/m/n/10 )^^B(\OML/cmm/m/it/10 Y\OT1/cmr/m/n/10 )) = [](^^B(\OML/cmm/m/it/10 X\OT1/cmr/m/n/10 )) + [](^^B(\OML/cmm/m/it/10 Y\OT1/cmr/m/n/10 ))$\TU/lmr/m/it/10 , and $[]\OT1/cmr/m/n/10 (^^B(\OML/cmm/m/it/10 X\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 =\OT1/cmr/m/n/10 ^^B(\OML/cmm/m/it/10 Y\OT1/cmr/m/n/10 )) =
+ []
+
+./chapter/order_of_magnitude.tex:89: Undefined control sequence.
+<recently read> \uses 
+                      
+l.89 \begin{proof}\uses
+                       {mag-arith, power-law}. Straightforward from Lemma \r...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+LaTeX Warning: Reference `mag-arith' on page 4 undefined on input line 89.
+
+
+LaTeX Warning: Reference `power-law' on page 4 undefined on input line 89.
+
+./chapter/order_of_magnitude.tex:93: Undefined control sequence.
+l.93 ...[Ordered vector space]\label{ord-vec}\uses
+                                                  {log-order-def} $\log \O$ ...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./chapter/order_of_magnitude.tex:96: Undefined control sequence.
+<recently read> \uses 
+                      
+l.96 \begin{proof}\uses
+                       {log-mult} Straightforward from Lemma \ref{log-mult}.
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+LaTeX Warning: Reference `log-mult' on page 4 undefined on input line 96.
+
+./chapter/order_of_magnitude.tex:108: Undefined control sequence.
+<recently read> \uses 
+                      
+l.108 \begin{proof}\uses
+                        {saturation} Pull back each of the $I_n$ to the hype...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+LaTeX Warning: Reference `saturation' on page 4 undefined on input line 108.
+
+./chapter/order_of_magnitude.tex:114: Undefined control sequence.
+<recently read> \uses 
+                      
+l.114 \begin{proof} \uses
+                         {completeness}  If one of the $I_n$ is a singleton,...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+LaTeX Warning: Reference `completeness' on page 4 undefined on input line 114.
+
+)) [4] (./web.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-03-14>
  ***********
+
+
+LaTeX Warning: There were undefined references.
 
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
@@ -366,19 +935,19 @@ Package rerunfilecheck Warning: File `web.out' has changed.
 
 Package rerunfilecheck Info: Checksums for `web.out':
 (rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  4D47AFB7107A54A21B0D2C438B3C2BD0;103.
+(rerunfilecheck)             After:  2C37C253D7070EB2DB3A41875BE76D7F;247.
  )
 (\end occurred inside a group at level 1)
 
 ### simple group (level 1) entered at line 17 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 9071 strings out of 474760
- 138069 string characters out of 5761057
- 1919148 words of memory out of 5000000
- 31135 multiletter control sequences out of 15000+600000
- 564821 words of font info for 69 fonts, out of 8000000 for 9000
+ 9130 strings out of 474760
+ 139467 string characters out of 5761057
+ 1932148 words of memory out of 5000000
+ 31187 multiletter control sequences out of 15000+600000
+ 564837 words of font info for 71 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 72i,6n,79p,610b,992s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 72i,6n,79p,648b,1078s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on web.pdf (3 pages).
+Output written on web.pdf (6 pages).
