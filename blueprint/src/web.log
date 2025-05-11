@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.4.28)  10 MAY 2025 06:35
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.4.28)  10 MAY 2025 23:36
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -746,12 +746,22 @@ and I'll forget about whatever was undefined.
 
 ./chapter/order_of_magnitude.tex:38: Undefined control sequence.
 l.38 ...]\label{mag-arith}\uses{theta-kernel}\lean
-                                                  {OrderOfMagnitude.add}  We...
+                                                  {OrderOfMagnitude.add, Ord...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (0.6267pt too wide) in paragraph at lines 38--39
+[]\TU/lmr/bx/n/10 Definition 8 \TU/lmr/m/n/10 (Arithmetic on magnitudes)\TU/lmr/bx/n/10 . \TU/lmr/m/n/10 theta-kernelOrderOfMagnitude.add,
+ []
+
+
+Overfull \hbox (1.64175pt too wide) in paragraph at lines 38--39
+\TU/lmr/m/n/10 OrderOfMagnitude.mul We define addition on $\OMS/cmsy/m/n/10 O$ \TU/lmr/m/n/10 by the requirement that $\OT1/cmr/m/n/10 ^^B(\OML/cmm/m/it/10 X\OT1/cmr/m/n/10 ) +
+ []
 
 ./chapter/order_of_magnitude.tex:41: Undefined control sequence.
 l.41 ...tion is tropical]\label{tropical-add}\uses
@@ -944,7 +954,7 @@ Package rerunfilecheck Info: Checksums for `web.out':
 Here is how much of TeX's memory you used:
  9130 strings out of 474760
  139467 string characters out of 5761057
- 1932148 words of memory out of 5000000
+ 1933148 words of memory out of 5000000
  31187 multiletter control sequences out of 15000+600000
  564837 words of font info for 71 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191

@@ -1,5 +1,6 @@
 import Mathlib.Data.Real.Hyperreal
 import EstimateTools.Order
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
 
 abbrev PositiveHyperreal := { x : Hyperreal // 0 < x }
 
@@ -154,3 +155,44 @@ lemma PositiveHyperreal.order_add (X Y: PositiveHyperreal) : (X+Y).order = X.ord
   apply Quotient.sound
   convert Setoid.refl (X + Y)
 
+noncomputable instance OrderOfMagnitude.mul : Mul OrderOfMagnitude := {
+  mul  := Quotient.lift₂ (fun x y => (x * y).order)
+    (by
+    intro X Y Z W hXZ hYW
+    simp [PositiveHyperreal.order_eq_iff]
+    replace hXZ := (PositiveHyperreal.asym_preorder.equiv_iff X Z).mp hXZ
+    replace hYW := (PositiveHyperreal.asym_preorder.equiv_iff Y W).mp hYW
+    have hX := X.property
+    have hY := Y.property
+    have hZ := Z.property
+    have hW := W.property
+    constructor
+    . obtain ⟨ C1, hC1, h1 ⟩ := hXZ.1
+      obtain ⟨ C2, hC2, h2 ⟩ := hYW.1
+      have hC1' := Hyperreal.coe_pos.mpr hC1
+      have hC2' := Hyperreal.coe_pos.mpr hC2
+      refine ⟨ C1 * C2, by positivity, ?_ ⟩
+      simp only [Positive.val_mul, Hyperreal.coe_mul]
+      calc
+        _ ≤ (C1 * (Z:Hyperreal)) * (C2 * (W:Hyperreal)) := by
+          gcongr
+        _ = _ := by ring
+    obtain ⟨ C1, hC1, h1 ⟩ := hXZ.2
+    obtain ⟨ C2, hC2, h2 ⟩ := hYW.2
+    have hC1' := Hyperreal.coe_pos.mpr hC1
+    have hC2' := Hyperreal.coe_pos.mpr hC2
+    refine ⟨ C1 * C2, by positivity, ?_ ⟩
+    simp only [Positive.val_mul, Hyperreal.coe_mul]
+    calc
+      _ ≤ (C1 * (X:Hyperreal)) * (C2 * (Y:Hyperreal)) := by
+        gcongr
+      _ = _ := by ring
+    )
+}
+
+@[simp]
+lemma PositiveHyperreal.order_mul (X Y: PositiveHyperreal) : (X*Y).order = X.order * Y.order := by
+  apply Quotient.sound
+  convert Setoid.refl (X * Y)
+
+noncomputable instance Hyperreal.pow : Pow Hyperreal Hyperreal := ⟨ Filter.Germ.map₂ (fun x y => (Real.rpow x y)) ⟩
