@@ -195,4 +195,4 @@ lemma PositiveHyperreal.order_mul (X Y: PositiveHyperreal) : (X*Y).order = X.ord
   apply Quotient.sound
   convert Setoid.refl (X * Y)
 
-noncomputable instance Hyperreal.pow : Pow Hyperreal Hyperreal := ⟨ Filter.Germ.map₂ (fun x y => (Real.rpow x y)) ⟩
+noncomputable instance Hyperreal.pow : Pow Hyperreal Hyperreal := ⟨ Filter.Germ.map₂ Real.rpow ⟩
