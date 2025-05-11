@@ -196,3 +196,74 @@ lemma PositiveHyperreal.order_mul (X Y: PositiveHyperreal) : (X*Y).order = X.ord
   convert Setoid.refl (X * Y)
 
 noncomputable instance Hyperreal.pow : Pow Hyperreal Hyperreal := ⟨ Filter.Germ.map₂ Real.rpow ⟩
+
+noncomputable abbrev to_hyperreal (x: ℕ → ℝ) : Hyperreal := Filter.Germ.ofFun x
+
+noncomputable instance pow_fn : Pow (ℕ → ℝ) (ℕ → ℝ) := {
+  pow := fun x y ↦ fun n ↦ x n ^ y n
+}
+
+@[simp]
+lemma pow_fn_eq (x y : ℕ → ℝ) (n:ℕ): (x ^ y) n = x n ^ y n := rfl
+
+@[simp]
+lemma Hyperreal.coe_pow (x y : ℕ → ℝ) : (to_hyperreal x) ^ (to_hyperreal y) = to_hyperreal (x ^ y) := rfl
+
+lemma Hyperreal.coe_zero_fn : (to_hyperreal 0) = 0 := rfl
+
+lemma Hyperreal.lt_def : ((· < ·): Hyperreal → Hyperreal → Prop) = Filter.Germ.LiftRel (· < ·) := Filter.Germ.lt_def
+
+lemma Hyperreal.le_def : ((· ≤ ·): Hyperreal → Hyperreal → Prop) = Filter.Germ.LiftRel (· ≤ ·) := by
+  ext ⟨x⟩ ⟨y⟩
+  exact Filter.Germ.coe_le
+
+lemma Hyperreal.gt_def : ((· > ·): Hyperreal → Hyperreal → Prop) = Filter.Germ.LiftRel (· > ·) := by
+  ext ⟨x⟩ ⟨y⟩
+  simp [Hyperreal.lt_def]
+
+lemma Hyperreal.ge_def : ((· ≥ ·): Hyperreal → Hyperreal → Prop) = Filter.Germ.LiftRel (· ≥ ·) := by
+  ext ⟨x⟩ ⟨y⟩
+  simp [Hyperreal.le_def]
+
+lemma Hyperreal.pow_of_pos {x : Hyperreal} (y:Hyperreal) : x > 0 → x^y > 0 := by
+  apply Quot.ind _ x; intro X
+  apply Quot.ind _ y; intro Y
+  simp only [Filter.Germ.quot_mk_eq_coe, gt_iff_lt, congrFun₂ Hyperreal.gt_def, Hyperreal.coe_pow, ←Hyperreal.coe_zero_fn, Filter.Germ.liftRel_coe]
+  intro h
+  apply Filter.Eventually.mp h (Filter.Eventually.of_forall _)
+  intro n
+  simp only [pow_fn_eq]
+  exact fun a ↦ Real.rpow_pos_of_pos a (Y n)
+
+noncomputable instance PositiveHyperreal.pow : Pow PositiveHyperreal Hyperreal := {
+  pow := fun X y ↦ ⟨ X.val ^ y, Hyperreal.pow_of_pos y X.property ⟩
+}
+
+@[simp]
+lemma PositiveHyperreal.pow_coe (X:PositiveHyperreal) (y:Hyperreal) : (X^y : PositiveHyperreal) = (X:Hyperreal)^y := rfl
+
+lemma Hyperreal.pow_le_pow {x y:Hyperreal} {z:Hyperreal} (hx: x ≥ 0) (hz: z ≥ 0) (hxy: x ≤ y) : x^z ≤ y^z := by
+  sorry -- use Real.rpow_le_rpow
+
+noncomputable instance OrderOfMagnitude.pow : Pow OrderOfMagnitude Real := {
+  pow  := fun X y ↦ (Quotient.lift (fun x => (x ^ (y:Hyperreal)).order)
+    (by
+      intro X Y hXY
+      obtain ⟨ ⟨ C₁, hC₁, h1 ⟩, ⟨ C₂, hC₂, h2 ⟩ ⟩ := (PositiveHyperreal.asym_preorder.equiv_iff X Y).mp hXY
+      have hC₁' := Hyperreal.coe_pos.mpr hC₁
+      have hC₂' := Hyperreal.coe_pos.mpr hC₂
+      simp [PositiveHyperreal.order_eq_iff]
+      constructor
+      . rcases lt_or_ge y 0 with hy | hy
+        . refine ⟨ C₂ ^ (-y), by positivity, ?_ ⟩
+          simp only [PositiveHyperreal.pow_coe]
+          sorry
+        refine ⟨ C₁ ^ y, by positivity, ?_ ⟩
+        sorry
+      rcases lt_or_ge y 0 with hy | hy
+      . refine ⟨ C₁ ^ (-y), by positivity, ?_ ⟩
+        sorry
+      refine ⟨ C₂ ^ y, by positivity, ?_ ⟩
+      sorry
+    ) X)
+}
