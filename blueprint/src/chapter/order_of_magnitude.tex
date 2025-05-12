@@ -41,19 +41,19 @@ If $X,Y$ are positive hyperreals, we write $X \lesssim Y$ if $X \leq CY$ for som
 \begin{lemma}[Addition is tropical]\label{tropical-add}\uses{mag-arith}\lean{OrderOfMagnitude.add_eq_max}\leanok For all orders of magnitude $\Theta(X), \Theta(Y)$, we have $\Theta(X) + \Theta(Y) = \max(\Theta(X), \Theta(Y))$.
 \end{lemma}
 
-\begin{proof} Easy.
+\begin{proof}\leanok Easy.
 \end{proof}
 
 \begin{corollary}[Additive commutative monoid]\label{add-comm-mon}\uses{tropical-add}\lean{OrderOfMagnitude.addCommSemigroup, OrderOfMagnitude.add_self}\leanok $\O$ is an ordered additive idempotent commutative monoid.
 \end{corollary}
 
-\begin{proof} Easy.
+\begin{proof}\leanok Easy.
 \end{proof}
 
 \begin{lemma}[Commutative semiring]\label{comm-semiring}\uses{mag-arith}\lean{OrderOfMagnitude.distrib, OrderOfMagnitude.comm_group, OrderOfMagnitude.orderedMonoid}\leanok $\O$ is a multiplicative ordered commutative group that distributes over addition.  (It is not a semiring in the Mathlib sense because it does not have a zero element.)
 \end{lemma}
 
-\begin{proof}\uses{tropical-add} Easy.
+\begin{proof}\uses{tropical-add}\leanok Easy.
 \end{proof}
 
 \begin{lemma}[Power laws]\label{power-law}\uses{mag-arith}  Let $\Theta(X), \Theta(Y)$ be orders of magnitude, and $\alpha,\beta$ be real numbers.

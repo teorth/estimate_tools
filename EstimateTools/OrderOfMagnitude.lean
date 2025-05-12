@@ -3,6 +3,7 @@ import EstimateTools.Order
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Algebra.Group.MinimalAxioms
 import Mathlib.Algebra.Group.TypeTags.Basic
+import Canonical
 
 
 abbrev PositiveHyperreal := { x : Hyperreal // 0 < x }
@@ -153,25 +154,52 @@ noncomputable instance OrderOfMagnitude.add : Add OrderOfMagnitude := {
      )
 }
 
-@[simp]
-lemma OrderOfMagnitude.add_eq_max (X Y: OrderOfMagnitude) : X + Y = max X Y := by
-  sorry
-
-noncomputable instance OrderOfMagnitude.addCommSemigroup  : AddCommSemigroup (OrderOfMagnitude) :=
-{
-  add_assoc := by
-    sorry
-  add_comm := by
-    sorry
-}
-
-lemma OrderOfMagnitude.add_self (X: OrderOfMagnitude) : X + X = X := by
-  simp only [add_eq_max, max_self]
 
 @[simp]
 lemma PositiveHyperreal.order_add (X Y: PositiveHyperreal) : (X+Y).order = X.order + Y.order := by
   apply Quotient.sound
   convert Setoid.refl (X + Y)
+
+@[simp]
+lemma OrderOfMagnitude.add_eq_max (X Y: OrderOfMagnitude) : X + Y = max X Y := by
+  obtain ⟨ x, rfl ⟩ := PositiveHyperreal.order_surjective X
+  obtain ⟨ y, rfl ⟩ := PositiveHyperreal.order_surjective Y
+  rcases le_or_gt x y with h | h
+  . have : x.order ≤ y.order := by
+      rw [PositiveHyperreal.order_le_iff]
+      refine ⟨1, by norm_num, ?_ ⟩
+      simp [h]
+    simp only [sup_of_le_right this, <-PositiveHyperreal.order_add, PositiveHyperreal.order_eq_iff]
+    constructor
+    . refine ⟨ (2:ℝ), by norm_num, ?_ ⟩
+      simp
+      have : (x:Hyperreal) ≤ y := h
+      linarith
+    refine ⟨ 1, by norm_num, ?_ ⟩
+    simp [le_of_lt x.property]
+  have : y.order ≤ x.order := by
+    rw [PositiveHyperreal.order_le_iff]
+    refine ⟨1, by norm_num, ?_ ⟩
+    simp [le_of_lt h]
+  simp only [sup_of_le_left this, <-PositiveHyperreal.order_add, PositiveHyperreal.order_eq_iff]
+  constructor
+  . refine ⟨ (2:ℝ), by norm_num, ?_ ⟩
+    simp
+    have : (y:Hyperreal) ≤ x := le_of_lt h
+    linarith
+  refine ⟨ 1, by norm_num, ?_ ⟩
+  simp [le_of_lt y.property]
+
+noncomputable instance OrderOfMagnitude.addCommSemigroup  : AddCommSemigroup (OrderOfMagnitude) :=
+{
+  add_assoc := by
+    simp [max_assoc]
+  add_comm := by
+    simp [max_comm]
+}
+
+lemma OrderOfMagnitude.add_self (X: OrderOfMagnitude) : X + X = X := by
+  simp only [add_eq_max, max_self]
 
 noncomputable instance OrderOfMagnitude.mul : Mul OrderOfMagnitude := {
   mul  := Quotient.lift₂ (fun x y => (x * y).order)
@@ -238,7 +266,11 @@ lemma Hyperreal.coe_mul_fn (x y : ℕ → ℝ) : (to_hyperreal x) * (to_hyperrea
 @[simp]
 lemma Hyperreal.coe_add_fn (x y : ℕ → ℝ) : (to_hyperreal x) + (to_hyperreal y) = to_hyperreal (x + y) := rfl
 
+@[simp]
 lemma Hyperreal.coe_zero_fn : (to_hyperreal 0) = 0 := rfl
+
+@[simp]
+lemma Hyperreal.coe_one_fn : (to_hyperreal 1) = 1 := rfl
 
 lemma Hyperreal.lt_def : ((· < ·): Hyperreal → Hyperreal → Prop) = Filter.Germ.LiftRel (· < ·) := Filter.Germ.lt_def
 
@@ -326,6 +358,15 @@ lemma Hyperreal.pow_zero (x:Hyperreal) : x^(0:Hyperreal) = 1 := by
   apply Quot.ind _ x; intro X
   simp only [Filter.Germ.quot_mk_eq_coe, ←Hyperreal.coe_zero_fn, Hyperreal.coe_pow, pow_fn_zero, Filter.Germ.coe_one]
 
+@[simp]
+lemma Hyperreal.pow_one (x:Hyperreal) : x^(1:Hyperreal) = x := by
+  apply Quot.ind _ x; intro X
+  simp only [Filter.Germ.quot_mk_eq_coe, ←Hyperreal.coe_one_fn, Hyperreal.coe_pow]
+  congr
+  ext n
+  simp only [pow_fn_eq, Pi.one_apply, Real.rpow_one]
+
+
 noncomputable instance OrderOfMagnitude.pow : Pow OrderOfMagnitude Real := {
   pow  := fun X y ↦ (Quotient.lift (fun x => (x ^ (y:Hyperreal)).order)
     (by
@@ -393,36 +434,97 @@ lemma PositiveHyperreal.order_pow (X: PositiveHyperreal) (y: ℝ) : (X^(y:Hyperr
   apply Quotient.sound
   simp only [Setoid.refl]
 
+@[simp]
+lemma OrderOfMagnitude.pow_one (X: OrderOfMagnitude) : (X^(1:ℝ)) = X := by
+  obtain ⟨ x, rfl ⟩ := PositiveHyperreal.order_surjective X
+  simp [←PositiveHyperreal.order_pow]
+  congr
+  simp [Subtype.eq_iff, PositiveHyperreal.pow_coe]
+
+
 
 noncomputable instance OrderOfMagnitude.inv : Inv OrderOfMagnitude := ⟨ fun X ↦ X ^ (-1:ℝ) ⟩
 
 noncomputable instance OrderOfMagnitude.group  : Group (OrderOfMagnitude) := Group.ofLeftAxioms
 (by
-  sorry
+  intro X Y Z
+  obtain ⟨ x, rfl ⟩ := PositiveHyperreal.order_surjective X
+  obtain ⟨ y, rfl ⟩ := PositiveHyperreal.order_surjective Y
+  obtain ⟨ z, rfl ⟩ := PositiveHyperreal.order_surjective Z
+  simp only [←PositiveHyperreal.order_mul, PositiveHyperreal.order_eq_iff, mul_assoc]
   )
 (by
-  sorry
+  intro X
+  obtain ⟨ x, rfl ⟩ := PositiveHyperreal.order_surjective X
+  simp only [←PositiveHyperreal.order_one, ←PositiveHyperreal.order_mul, one_mul]
   )
 (by
-  sorry
+  intro X
+  obtain ⟨ x, rfl ⟩ := PositiveHyperreal.order_surjective X
+  simp only [OrderOfMagnitude.inv, ←PositiveHyperreal.order_pow, ←PositiveHyperreal.order_mul,  ←PositiveHyperreal.order_one]
+  congr
+  simp only [Hyperreal.coe_neg, Hyperreal.coe_one, Subtype.eq_iff, Positive.val_mul, PositiveHyperreal.pow_coe, Positive.val_one]
+  nth_rewrite 2 [←Hyperreal.pow_one (x : Hyperreal)]
+  rw [←Hyperreal.pow_add]
+  simp
+  exact x.property
 )
+
 
 noncomputable instance OrderOfMagnitude.comm_group  : CommGroup (OrderOfMagnitude) := {
   mul_comm := by
-    sorry
+    intro X Y
+    obtain ⟨ x, rfl ⟩ := PositiveHyperreal.order_surjective X
+    obtain ⟨ y, rfl ⟩ := PositiveHyperreal.order_surjective Y
+    simp only [←PositiveHyperreal.order_mul, mul_comm]
 }
 
 
 instance OrderOfMagnitude.orderedMonoid  : IsOrderedMonoid OrderOfMagnitude := {
-  mul_le_mul_left := by sorry
-  mul_le_mul_right := by sorry
+  mul_le_mul_left := by
+    intro X Y hXY Z
+    obtain ⟨ x, rfl ⟩ := PositiveHyperreal.order_surjective X
+    obtain ⟨ y, rfl ⟩ := PositiveHyperreal.order_surjective Y
+    obtain ⟨ z, rfl ⟩ := PositiveHyperreal.order_surjective Z
+    simp only [←PositiveHyperreal.order_mul, PositiveHyperreal.order_le_iff] at hXY ⊢
+    obtain ⟨ C, hC, h1 ⟩ := hXY
+    refine ⟨ C, hC, ?_ ⟩
+    simp only [Positive.val_mul]
+    calc
+      _ ≤ (z:Hyperreal) * (C * (y:Hyperreal)) := by
+        gcongr
+        exact le_of_lt z.property
+      _ = _ := by ring
+  mul_le_mul_right := by
+    intro X Y hXY Z
+    obtain ⟨ x, rfl ⟩ := PositiveHyperreal.order_surjective X
+    obtain ⟨ y, rfl ⟩ := PositiveHyperreal.order_surjective Y
+    obtain ⟨ z, rfl ⟩ := PositiveHyperreal.order_surjective Z
+    simp only [←PositiveHyperreal.order_mul, PositiveHyperreal.order_le_iff] at hXY ⊢
+    obtain ⟨ C, hC, h1 ⟩ := hXY
+    refine ⟨ C, hC, ?_ ⟩
+    simp only [Positive.val_mul]
+    calc
+      _ ≤ (z:Hyperreal) * (C * (y:Hyperreal)) := by
+        rw [mul_comm]
+        have := le_of_lt z.property
+        gcongr
+      _ = _ := by ring
 }
 
 noncomputable instance OrderOfMagnitude.distrib : Distrib OrderOfMagnitude := {
   left_distrib := by
-    sorry
+    intro X Y Z
+    obtain ⟨ x, rfl ⟩ := PositiveHyperreal.order_surjective X
+    obtain ⟨ y, rfl ⟩ := PositiveHyperreal.order_surjective Y
+    obtain ⟨ z, rfl ⟩ := PositiveHyperreal.order_surjective Z
+    simp only [←PositiveHyperreal.order_mul, ←PositiveHyperreal.order_add, left_distrib]
   right_distrib := by
-    sorry
+    intro X Y Z
+    obtain ⟨ x, rfl ⟩ := PositiveHyperreal.order_surjective X
+    obtain ⟨ y, rfl ⟩ := PositiveHyperreal.order_surjective Y
+    obtain ⟨ z, rfl ⟩ := PositiveHyperreal.order_surjective Z
+    simp only [←PositiveHyperreal.order_mul, ←PositiveHyperreal.order_add, right_distrib]
 }
 
 
