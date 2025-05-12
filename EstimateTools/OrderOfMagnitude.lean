@@ -1,6 +1,8 @@
 import Mathlib.Data.Real.Hyperreal
 import EstimateTools.Order
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Algebra.Group.MinimalAxioms
+
 
 abbrev PositiveHyperreal := { x : Hyperreal // 0 < x }
 
@@ -149,6 +151,21 @@ noncomputable instance OrderOfMagnitude.add : Add OrderOfMagnitude := {
        _ = _ := by simp [Hyperreal.coe_max, mul_add]
      )
 }
+
+@[simp]
+lemma OrderOfMagnitude.add_eq_max (X Y: OrderOfMagnitude) : X + Y = max X Y := by
+  sorry
+
+noncomputable instance OrderOfMagnitude.addCommSemigroup  : AddCommSemigroup (OrderOfMagnitude) :=
+{
+  add_assoc := by
+    sorry
+  add_comm := by
+    sorry
+}
+
+lemma OrderOfMagnitude.add_self (X: OrderOfMagnitude) : X + X = X := by
+  simp only [add_eq_max, max_self]
 
 @[simp]
 lemma PositiveHyperreal.order_add (X Y: PositiveHyperreal) : (X+Y).order = X.order + Y.order := by
@@ -374,3 +391,35 @@ noncomputable instance OrderOfMagnitude.pow : Pow OrderOfMagnitude Real := {
 lemma PositiveHyperreal.order_pow (X: PositiveHyperreal) (y: ℝ) : (X^(y:Hyperreal)).order = X.order ^ y := by
   apply Quotient.sound
   simp only [Setoid.refl]
+
+
+noncomputable instance OrderOfMagnitude.inv : Inv OrderOfMagnitude := ⟨ fun X ↦ X ^ (-1:ℝ) ⟩
+
+noncomputable instance OrderOfMagnitude.group  : Group (OrderOfMagnitude) := Group.ofLeftAxioms
+(by
+  sorry
+  )
+(by
+  sorry
+  )
+(by
+  sorry
+)
+
+noncomputable instance OrderOfMagnitude.comm_group  : CommGroup (OrderOfMagnitude) := {
+  mul_comm := by
+    sorry
+}
+
+
+instance OrderOfMagnitude.orderedMonoid  : IsOrderedMonoid OrderOfMagnitude := {
+  mul_le_mul_left := by sorry
+  mul_le_mul_right := by sorry
+}
+
+noncomputable instance OrderOfMagnitude.distrib : Distrib OrderOfMagnitude := {
+  left_distrib := by
+    sorry
+  right_distrib := by
+    sorry
+}
