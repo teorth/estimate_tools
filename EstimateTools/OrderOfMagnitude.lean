@@ -207,7 +207,18 @@ noncomputable instance pow_fn : Pow (ℕ → ℝ) (ℕ → ℝ) := {
 lemma pow_fn_eq (x y : ℕ → ℝ) (n:ℕ): (x ^ y) n = x n ^ y n := rfl
 
 @[simp]
+lemma pow_fn_zero (x : ℕ → ℝ) : (x ^ (0 : ℕ → ℝ)) = 1 := by
+  funext n
+  simp [pow_fn_eq, zero_pow]
+
+@[simp]
 lemma Hyperreal.coe_pow (x y : ℕ → ℝ) : (to_hyperreal x) ^ (to_hyperreal y) = to_hyperreal (x ^ y) := rfl
+
+@[simp]
+lemma Hyperreal.coe_mul_fn (x y : ℕ → ℝ) : (to_hyperreal x) * (to_hyperreal y) = to_hyperreal (x * y) := rfl
+
+@[simp]
+lemma Hyperreal.coe_add_fn (x y : ℕ → ℝ) : (to_hyperreal x) + (to_hyperreal y) = to_hyperreal (x + y) := rfl
 
 lemma Hyperreal.coe_zero_fn : (to_hyperreal 0) = 0 := rfl
 
@@ -243,7 +254,59 @@ noncomputable instance PositiveHyperreal.pow : Pow PositiveHyperreal Hyperreal :
 lemma PositiveHyperreal.pow_coe (X:PositiveHyperreal) (y:Hyperreal) : (X^y : PositiveHyperreal) = (X:Hyperreal)^y := rfl
 
 lemma Hyperreal.pow_le_pow {x y:Hyperreal} {z:Hyperreal} (hx: x ≥ 0) (hz: z ≥ 0) (hxy: x ≤ y) : x^z ≤ y^z := by
-  sorry -- use Real.rpow_le_rpow
+  revert hxy hz hx
+  apply Quot.ind _ x; intro X
+  apply Quot.ind _ y; intro Y
+  apply Quot.ind _ z; intro Z
+  simp
+  intro hx hz hxy
+  simp only [congrFun₂ Hyperreal.le_def _ _, Filter.Germ.liftRel_coe, pow_fn_eq, ←Hyperreal.coe_zero_fn] at hx hz hxy ⊢
+  filter_upwards [hz, hx, hxy] with n hzn hxn hxyn
+  simp only [Pi.zero_apply] at hzn hxn
+  exact Real.rpow_le_rpow hxn hxyn hzn
+
+lemma Hyperreal.pow_le_pow' {x y:Hyperreal} {z:Hyperreal} (hx: x > 0) (hz: z < 0) (hxy: x ≤ y) : x^z ≥ y^z := by
+  revert hx hz hxy
+  apply Quot.ind _ x; intro X
+  apply Quot.ind _ y; intro Y
+  apply Quot.ind _ z; intro Z
+  simp
+  intro hx hz hxy
+  simp only [congrFun₂ Hyperreal.ge_def _ _, congrFun₂ Hyperreal.lt_def _ _, Filter.Germ.liftRel_coe, pow_fn_eq, ←Hyperreal.coe_zero_fn] at hx hz hxy ⊢
+  filter_upwards [hz, hx, hxy] with n hzn hxn hxyn
+  simp only [Pi.zero_apply] at hzn hxn
+  apply Real.rpow_le_rpow_of_nonpos hxn hxyn (le_of_lt hzn)
+
+lemma Hyperreal.mul_pow {x y:Hyperreal} (hx: x ≥ 0) (hy: y ≥ 0) (z:Hyperreal) : (x*y)^z = x^z * y^z := by
+  revert hx hy
+  apply Quot.ind _ x; intro X
+  apply Quot.ind _ y; intro Y
+  apply Quot.ind _ z; intro Z
+  simp
+  intro hx hy
+  simp only [congrFun₂ Hyperreal.le_def _ _, Filter.Germ.liftRel_coe, pow_fn_eq, ←Hyperreal.coe_zero_fn, Hyperreal.coe_pow, Hyperreal.coe_mul_fn _ _] at hx hy ⊢
+  rw [Filter.Germ.coe_eq]
+  filter_upwards [hx, hy] with n hxn hyn
+  simp only [pow_fn_eq, Pi.mul_apply, Pi.zero_apply] at hxn hyn ⊢
+  exact Real.mul_rpow hxn hyn
+
+lemma Hyperreal.pow_add {x:Hyperreal} (hx: x > 0) (y z:Hyperreal) : x^(y+z) = x^y * x^z := by
+  revert hx
+  apply Quot.ind _ x; intro X
+  apply Quot.ind _ y; intro Y
+  apply Quot.ind _ z; intro Z
+  simp
+  intro hx
+  simp only [congrFun₂ Hyperreal.lt_def _ _, Filter.Germ.liftRel_coe, pow_fn_eq, ←Hyperreal.coe_zero_fn, Hyperreal.coe_pow, Hyperreal.coe_add_fn _ _, Hyperreal.coe_mul_fn _ _] at hx ⊢
+  rw [Filter.Germ.coe_eq]
+  filter_upwards [hx] with n hxn
+  simp only [pow_fn_eq, Pi.add_apply, Pi.zero_apply] at hxn ⊢
+  exact Real.rpow_add hxn _ _
+
+@[simp]
+lemma Hyperreal.pow_zero (x:Hyperreal) : x^(0:Hyperreal) = 1 := by
+  apply Quot.ind _ x; intro X
+  simp only [Filter.Germ.quot_mk_eq_coe, ←Hyperreal.coe_zero_fn, Hyperreal.coe_pow, pow_fn_zero, Filter.Germ.coe_one]
 
 noncomputable instance OrderOfMagnitude.pow : Pow OrderOfMagnitude Real := {
   pow  := fun X y ↦ (Quotient.lift (fun x => (x ^ (y:Hyperreal)).order)
@@ -252,18 +315,62 @@ noncomputable instance OrderOfMagnitude.pow : Pow OrderOfMagnitude Real := {
       obtain ⟨ ⟨ C₁, hC₁, h1 ⟩, ⟨ C₂, hC₂, h2 ⟩ ⟩ := (PositiveHyperreal.asym_preorder.equiv_iff X Y).mp hXY
       have hC₁' := Hyperreal.coe_pos.mpr hC₁
       have hC₂' := Hyperreal.coe_pos.mpr hC₂
+      have hX := X.property
+      have hY := Y.property
       simp [PositiveHyperreal.order_eq_iff]
       constructor
       . rcases lt_or_ge y 0 with hy | hy
         . refine ⟨ C₂ ^ (-y), by positivity, ?_ ⟩
           simp only [PositiveHyperreal.pow_coe]
-          sorry
+          calc
+            _ = (C₂:Hyperreal) ^ (-y:Hyperreal) * (C₂:Hyperreal) ^ (y:Hyperreal) * (X:Hyperreal)^(y:Hyperreal) := by
+              convert (one_mul _).symm
+              simp [←Hyperreal.pow_add hC₂']
+            _ = (C₂:Hyperreal) ^ (-y:Hyperreal) * ((C₂:Hyperreal) * X)^(y:Hyperreal) := by
+              rw [mul_assoc]
+              congr; symm
+              apply Hyperreal.mul_pow (le_of_lt hC₂') (le_of_lt hX) _
+            _ ≤ _ := by
+              gcongr
+              . apply le_of_lt (Hyperreal.pow_of_pos _ _)
+                positivity
+              . simp; positivity
+              . apply le_refl
+              apply Hyperreal.pow_le_pow' hY _ h2
+              convert Hyperreal.coe_lt_coe.mpr hy
         refine ⟨ C₁ ^ y, by positivity, ?_ ⟩
-        sorry
+        simp only [PositiveHyperreal.pow_coe]
+        calc
+          _ ≤ ((C₁:Hyperreal) * Y) ^ (y:Hyperreal) := Hyperreal.pow_le_pow (le_of_lt X.property) (Hyperreal.coe_nonneg.mpr hy) h1
+          _ = _ := Hyperreal.mul_pow (le_of_lt hC₁') (le_of_lt Y.property) _
       rcases lt_or_ge y 0 with hy | hy
       . refine ⟨ C₁ ^ (-y), by positivity, ?_ ⟩
-        sorry
+        simp only [PositiveHyperreal.pow_coe]
+        calc
+          _ = (C₁:Hyperreal) ^ (-y:Hyperreal) * (C₁:Hyperreal) ^ (y:Hyperreal) * (Y:Hyperreal)^(y:Hyperreal) := by
+            convert (one_mul _).symm
+            simp [←Hyperreal.pow_add hC₁']
+          _ = (C₁:Hyperreal) ^ (-y:Hyperreal) * ((C₁:Hyperreal) * Y)^(y:Hyperreal) := by
+            rw [mul_assoc]
+            congr; symm
+            apply Hyperreal.mul_pow (le_of_lt hC₁') (le_of_lt hY) _
+          _ ≤ _ := by
+            gcongr
+            . apply le_of_lt (Hyperreal.pow_of_pos _ _)
+              positivity
+            . simp; positivity
+            . apply le_refl
+            apply Hyperreal.pow_le_pow' hX _ h1
+            convert Hyperreal.coe_lt_coe.mpr hy
       refine ⟨ C₂ ^ y, by positivity, ?_ ⟩
-      sorry
+      simp only [PositiveHyperreal.pow_coe]
+      calc
+        _ ≤ ((C₂:Hyperreal) * X) ^ (y:Hyperreal) := Hyperreal.pow_le_pow (le_of_lt Y.property) (Hyperreal.coe_nonneg.mpr hy) h2
+        _ = _ := Hyperreal.mul_pow (le_of_lt hC₂') (le_of_lt X.property) _
     ) X)
 }
+
+@[simp]
+lemma PositiveHyperreal.order_pow (X: PositiveHyperreal) (y: ℝ) : (X^(y:Hyperreal)).order = X.order ^ y := by
+  apply Quotient.sound
+  simp only [Setoid.refl]
