@@ -2,6 +2,7 @@ import Mathlib.Data.Real.Hyperreal
 import EstimateTools.Order
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Algebra.Group.MinimalAxioms
+import Mathlib.Algebra.Group.TypeTags.Basic
 
 
 abbrev PositiveHyperreal := { x : Hyperreal // 0 < x }
@@ -423,3 +424,6 @@ noncomputable instance OrderOfMagnitude.distrib : Distrib OrderOfMagnitude := {
   right_distrib := by
     sorry
 }
+
+
+abbrev LogOrderOfMagnitude := Additive OrderOfMagnitude
