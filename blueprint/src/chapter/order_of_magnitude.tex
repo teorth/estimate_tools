@@ -35,7 +35,7 @@ If $X,Y$ are positive hyperreals, we write $X \lesssim Y$ if $X \leq CY$ for som
 \begin{proof}\leanok Easy.
 \end{proof}
 
-\begin{definition}[Arithmetic on magnitudes]\label{mag-arith}\uses{theta-kernel}\lean{OrderOfMagnitude.add, OrderOfMagnitude.mul}  We define addition on $\O$ by the requirement that $\Theta(X) + \Theta(Y) = \Theta(X+Y)$ for positive hyperreals $X,Y$.  Similarly we define multiplication, inverse, and division.  We define real exponentiation by requiring that $\Theta(X^\alpha) = \Theta(X)^\alpha$ for positive hyperreals $X$ and real $\alpha$.
+\begin{definition}[Arithmetic on magnitudes]\label{mag-arith}\uses{theta-kernel}\lean{OrderOfMagnitude.add, OrderOfMagnitude.mul, OrderOfMagnitude.pow}\leanok  We define addition on $\O$ by the requirement that $\Theta(X) + \Theta(Y) = \Theta(X+Y)$ for positive hyperreals $X,Y$.  Similarly we define multiplication, inverse, and division.  We define real exponentiation by requiring that $\Theta(X^\alpha) = \Theta(X)^\alpha$ for positive hyperreals $X$ and real $\alpha$.
 \end{definition}
 
 \begin{lemma}[Addition is tropical]\label{tropical-add}\uses{mag-arith} For all orders of magnitude $\Theta(X), \Theta(Y)$, we have $\Theta(X) + \Theta(Y) = \max(\Theta(X), \Theta(Y))$.
