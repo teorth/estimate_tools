@@ -56,7 +56,7 @@ If $X,Y$ are positive hyperreals, we write $X \lesssim Y$ if $X \leq CY$ for som
 \begin{proof}\uses{tropical-add}\leanok Easy.
 \end{proof}
 
-\begin{lemma}[Power laws]\label{power-law}\uses{mag-arith}  Let $\Theta(X), \Theta(Y)$ be orders of magnitude, and $\alpha,\beta$ be real numbers.
+\begin{lemma}[Power laws]\label{power-law}\uses{mag-arith}\lean{power-i,power-i', power-ii, power-iv, power-v, power-vi, power-vii, power-vii', power-viii, power-ix, power-ix'}  Let $\Theta(X), \Theta(Y)$ be orders of magnitude, and $\alpha,\beta$ be real numbers.
     \begin{itemize}
     \item[(i)] We have $\Theta(XY)^\alpha = \Theta(X^\alpha Y^\alpha)$ and $\Theta(X/Y)^\alpha = \Theta(X^\alpha / Y^\alpha)$.
     \item[(ii)] We have $\Theta(X^{\alpha \beta}) = \Theta(X^\alpha)^\beta$.  
@@ -73,7 +73,7 @@ If $X,Y$ are positive hyperreals, we write $X \lesssim Y$ if $X \leq CY$ for som
 \begin{proof} Straightforward.
 \end{proof}
 
-\begin{definition}[Log-order of magnitude] \label{log-order-def}\uses{mag-arith}  We define $\log \O$ to be the collection of formal logarithms of magnitude $\log(\Theta(X))$ of orders of magnitude $\Theta(X)$.  $1$, multiplication, and exponentiation of orders of magnitude become $0$, addition, and scalar multiplication; and order is preserved. By definition, $\log \colon \O \to \log \O$ is a order isomorphism.
+\begin{definition}[Log-order of magnitude] \label{log-order-def}\uses{mag-arith}\leanok  We define $\log \O$ to be the collection of formal logarithms of magnitude $\log(\Theta(X))$ of orders of magnitude $\Theta(X)$.  $1$, multiplication, and exponentiation of orders of magnitude become $0$, addition, and scalar multiplication; and order is preserved. By definition, $\log \colon \O \to \log \O$ is a order isomorphism.
 \end{definition}
 
 
@@ -96,7 +96,7 @@ If $X,Y$ are positive hyperreals, we write $X \lesssim Y$ if $X \leq CY$ for som
 \begin{proof}\uses{log-mult} Straightforward from Lemma \ref{log-mult}.
 \end{proof}
 
-\begin{lemma}[Countable saturation]\label{saturation} Let $I_1, I_2,\dots$ be a sequence of internal sets in the hyperreals.  If every finite intersection of these sets is non-empty, then $\bigcap_{n=1}^\infty I_n$ is non-empty.
+\begin{lemma}[Countable saturation]\label{saturation}\leanok Let $I_1 \supset I_2 \supset \dots$ be a sequence of internal sets in the hyperreals.  If each of the $I_n$ is non-empty, then $\bigcap_{n=1}^\infty I_n$ is non-empty.
 \end{lemma}
 
 \begin{proof}  Write each $I_n$ as an ultraproduct of $I_{n,m}$.  Then, we can find a nested sequence $E_1 \supset E_2 \supset \dots$ of large sets in the ultrafilter such that $\bigcap_{n \leq n_0} I_{n,m}$ is non-empty for all $m \in E_{n_0}$ and all $n_0$, and also $n_0 \not \in E_{n_0}$.  If we then pick $x_m$ to lie in $\bigcap_{n \leq n_0} E_{n,m}$ where $n_0$ is the largest number for which $m \in E_{n_0}$, the ultralimit of the $x_m$ will have the required properties.

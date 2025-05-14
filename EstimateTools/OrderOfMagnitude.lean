@@ -527,5 +527,79 @@ noncomputable instance OrderOfMagnitude.distrib : Distrib OrderOfMagnitude := {
     simp only [←PositiveHyperreal.order_mul, ←PositiveHyperreal.order_add, right_distrib]
 }
 
+/--
+    \item[(i)] We have $\Theta(XY)^\alpha = \Theta(X^\alpha Y^\alpha)$ and $\Theta(X/Y)^\alpha = \Theta(X^\alpha / Y^\alpha)$.
+    \item[(ii)] We have $\Theta(X^{\alpha \beta}) = \Theta(X^\alpha)^\beta$.
+    \item[(iii)] We have $\Theta(X)^0 = 1$, $\Theta(X)^1 = \Theta(X)$, and $\Theta(X)^{-1} = 1 / \Theta(X)$.
+    \item[(iv)] We have $\Theta(1)^\alpha = 1$.
+    \item[(v)] We have $\Theta(X+Y)^\alpha = \Theta(X)^\alpha + \Theta(Y)^\alpha$ for $\alpha \geq 0$.
+    \item[(vi)]  If $\alpha \geq 0$ and $\Theta(X) \leq \Theta(Y)$, then $\Theta(X)^\alpha \leq \Theta(Y)^\alpha$.
+    \item[(vii)] If $\alpha > 0$, then $\Theta(X) \leq \Theta(Y)$, if and only if $\Theta(X)^\alpha \leq \Theta(Y)^\alpha$, and $\Theta(X) < \Theta(Y)$ if and only if $\Theta(X)^\alpha < \Theta(Y)^\alpha$.
+    \item[(viii)] If $\alpha \leq 0$ and $\Theta(X) \leq \Theta(Y)$, then $\Theta(X)^\alpha \geq \Theta(Y)^\alpha$.
+    \item[(ix)] If $\alpha < 0$, then $\Theta(X) \leq \Theta(Y)$, if and only if $\Theta(X)^\alpha \geq \Theta(Y)^\alpha$, and $\Theta(X) < \Theta(Y)$ if and only if $\Theta(X)^\alpha > \Theta(Y)^\alpha$.
+    -/
+
+lemma power_i (X Y: OrderOfMagnitude) (α: ℝ) : (X * Y)^α = X^α * Y^α := by
+  obtain ⟨ x, rfl ⟩ := PositiveHyperreal.order_surjective X
+  obtain ⟨ y, rfl ⟩ := PositiveHyperreal.order_surjective Y
+  simp only [←PositiveHyperreal.order_mul, ←PositiveHyperreal.order_pow]
+  congr
+  sorry
+
+lemma power_i' (X Y: OrderOfMagnitude) (α: ℝ) : (X / Y)^α = X^α / Y^α := by
+  obtain ⟨ x, rfl ⟩ := PositiveHyperreal.order_surjective X
+  obtain ⟨ y, rfl ⟩ := PositiveHyperreal.order_surjective Y
+  sorry
+
+lemma power_ii (X: OrderOfMagnitude) (α: ℝ) : X^(α * β) = (X^α)^β := by
+  obtain ⟨ x, rfl ⟩ := PositiveHyperreal.order_surjective X
+  simp only [←PositiveHyperreal.order_pow]
+  congr 1
+  sorry
+
+@[simp]
+lemma power_iv (α: ℝ) : (1:OrderOfMagnitude)^α = 1 := by
+  sorry
+
+lemma power_v (X Y: OrderOfMagnitude) (α: ℝ) : (X + Y)^α = X^α + Y^α := by
+  sorry
+
+lemma power_vi (X Y: OrderOfMagnitude) {α: ℝ} (hα: α ≥ 0) (hXY: X ≤ Y) : X^α ≤ Y^α := by
+  sorry
+
+lemma power_vii (X Y: OrderOfMagnitude) {α: ℝ} (hα: α > 0) : X ≤ Y ↔ X^α ≤ Y^α := by sorry
+
+lemma power_vii' (X Y: OrderOfMagnitude) {α: ℝ} (hα: α > 0) : X < Y ↔ X^α < Y^α := by
+  obtain ⟨ x, rfl ⟩ := PositiveHyperreal.order_surjective X
+  obtain ⟨ y, rfl ⟩ := PositiveHyperreal.order_surjective Y
+  simp only [PositiveHyperreal.order_lt_iff]
+  sorry
+
+lemma power_viii (X Y: OrderOfMagnitude) {α: ℝ} (hα: α ≤ 0) (hXY: X ≤ Y) : X^α ≤ Y^α := by
+  sorry
+
+lemma power_ix (X Y: OrderOfMagnitude) {α: ℝ} (hα: α < 0): X ≤ Y ↔ X^α ≤ Y^α := by
+  sorry
+
+lemma power_ix' (X Y: OrderOfMagnitude) {α: ℝ} (hα: α < 0): X < Y ↔ X^α < Y^α := by
+  sorry
 
 abbrev LogOrderOfMagnitude := Additive OrderOfMagnitude
+
+
+abbrev internal (E : ℕ → Set ℝ) : Set Hyperreal := Filter.Germ.ofFun '' { (x : ℕ → ℝ) | ∀ᶠ n in (Filter.hyperfilter ℕ : Filter ℕ), x n ∈ E n }
+
+abbrev is_internal (E : Set Hyperreal) : Prop := ∃ E' : ℕ → Set ℝ, E = internal E'
+
+lemma saturation (I : ℕ → Set Hyperreal) (hI : ∀ n, is_internal (I n)) (hI' : ∀ n, I n ≠ ∅) (hI'' : ∀ n, I (n+1) ⊆ I n): ∃ x : Hyperreal, ∀ n, x ∈ I n := by
+  let f : Filter ℕ := Filter.hyperfilter ℕ
+  let E := fun n ↦ (hI n).choose
+  have hE (n:ℕ) : I n = internal (E n) := (hI n).choose_spec
+  let F : ℕ → Set ℕ := fun n₀ ↦ {m:ℕ| m ≥ n₀ ∧ Nonempty (⋂ n : Fin n₀, E n m)}
+  have hnon (n₀:ℕ) : F n₀ ∈ f := by sorry
+  let N : ℕ → ℕ := fun m ↦ sSup { n₀ : ℕ | m ∈ F n₀ }
+  have hN (m:ℕ): Nonempty (⋂ n : Fin (N m), E n m) := by sorry
+  let x : ℕ → ℝ := fun m ↦ (hN m).some
+  use Filter.Germ.ofFun x
+  intro n
+  sorry
