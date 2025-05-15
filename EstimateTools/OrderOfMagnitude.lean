@@ -442,7 +442,6 @@ lemma OrderOfMagnitude.pow_one (X: OrderOfMagnitude) : (X^(1:ℝ)) = X := by
   simp [Subtype.eq_iff, PositiveHyperreal.pow_coe]
 
 
-
 noncomputable instance OrderOfMagnitude.inv : Inv OrderOfMagnitude := ⟨ fun X ↦ X ^ (-1:ℝ) ⟩
 
 noncomputable instance OrderOfMagnitude.group  : Group (OrderOfMagnitude) := Group.ofLeftAxioms
@@ -527,6 +526,8 @@ noncomputable instance OrderOfMagnitude.distrib : Distrib OrderOfMagnitude := {
     simp only [←PositiveHyperreal.order_mul, ←PositiveHyperreal.order_add, right_distrib]
 }
 
+
+
 lemma power_i (X Y: OrderOfMagnitude) (α: ℝ) : (X * Y)^α = X^α * Y^α := by
   obtain ⟨ x, rfl ⟩ := PositiveHyperreal.order_surjective X
   obtain ⟨ y, rfl ⟩ := PositiveHyperreal.order_surjective Y
@@ -592,10 +593,7 @@ def OrderOfMagnitude.log_ordered : OrderOfMagnitude ≃o LogOrderOfMagnitude := 
 
 def LogOrderOfMagnitude.exp_ordered : LogOrderOfMagnitude ≃o  OrderOfMagnitude := OrderOfMagnitude.log_ordered.symm
 
-noncomputable instance LogOrderOfMagnitude.linear_order : LinearOrder LogOrderOfMagnitude := {
-  le_total := by sorry
-  toDecidableLE := Classical.decRel LE.le
-}
+noncomputable instance LogOrderOfMagnitude.linear_order : LinearOrder LogOrderOfMagnitude := @Additive.linearOrder OrderOfMagnitude OrderOfMagnitude.linearOrder
 
 lemma OrderOfMagnitude.log_mul (X Y: OrderOfMagnitude) : (X * Y).log = X.log + Y.log := rfl
 
@@ -610,7 +608,8 @@ lemma OrderOfMagnitude.log_div (X Y: OrderOfMagnitude) : (X / Y).log = X.log - Y
 lemma OrderOfMagnitude.log_one : (1:OrderOfMagnitude).log = 0 := rfl
 
 lemma OrderOfMagnitude.log_const (C: ℝ) (hC: C > 0) : (C.toPositiveHyperreal hC).order.log = 0 := by
-  sorry
+  rw [Real.order_of_pos C hC]
+  exact OrderOfMagnitude.log_one -- which is rfl
 
 
 noncomputable instance LogOrderOfMagnitude.vec : Module ℝ LogOrderOfMagnitude := {
