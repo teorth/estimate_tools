@@ -77,7 +77,7 @@ If $X,Y$ are positive hyperreals, we write $X \lesssim Y$ if $X \leq CY$ for som
 \end{definition}
 
 
-\begin{lemma}[Log of addition]\label{log-add}\uses{log-order-def}\lean{log_mul, log_mul'}\leanok  For orders of magnitude $\Theta(X), \Theta(Y)$, we have $\log(\Theta(X) + \Theta(Y)) = \max(\log(\Theta(X)), \log(\Theta(Y)))$.
+\begin{lemma}[Log of addition]\label{log-add}\uses{log-order-def}\lean{OrderOfMagnitude.log_mul, OrderOfMagnitude.log_mul'}\leanok  For orders of magnitude $\Theta(X), \Theta(Y)$, we have $\log(\Theta(X) + \Theta(Y)) = \max(\log(\Theta(X)), \log(\Theta(Y)))$.
 \end{lemma}
 
 \begin{proof}\uses{tropical-add} Immediate from Lemma \ref{tropical-add}.
