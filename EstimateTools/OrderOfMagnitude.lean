@@ -296,6 +296,14 @@ lemma Hyperreal.pow_of_pos {x : Hyperreal} (y:Hyperreal) : x > 0 → x^y > 0 := 
   simp only [pow_fn_eq]
   exact fun a ↦ Real.rpow_pos_of_pos a (Y n)
 
+@[simp]
+lemma Hyperreal.pow_of_one (y: Hyperreal) : (1:Hyperreal)^y = 1 := by
+  apply Quot.ind _ y; intro Y
+  simp only [←Hyperreal.coe_one_fn]
+  convert Hyperreal.coe_pow _ _
+  ext N
+  simp only [Pi.one_apply, pow_fn_eq, Real.one_rpow]
+
 noncomputable instance PositiveHyperreal.pow : Pow PositiveHyperreal Hyperreal := {
   pow := fun X y ↦ ⟨ X.val ^ y, Hyperreal.pow_of_pos y X.property ⟩
 }
@@ -352,6 +360,19 @@ lemma Hyperreal.pow_add {x:Hyperreal} (hx: x > 0) (y z:Hyperreal) : x^(y+z) = x^
   filter_upwards [hx] with n hxn
   simp only [pow_fn_eq, Pi.add_apply, Pi.zero_apply] at hxn ⊢
   exact Real.rpow_add hxn _ _
+
+lemma Hyperreal.pow_mul {x:Hyperreal} (hx: x > 0) (y z:Hyperreal) : x^(y*z) = (x^y)^z := by
+  revert hx
+  apply Quot.ind _ x; intro X
+  apply Quot.ind _ y; intro Y
+  apply Quot.ind _ z; intro Z
+  simp
+  intro hx
+  simp only [congrFun₂ Hyperreal.lt_def _ _, Filter.Germ.liftRel_coe, pow_fn_eq, ←Hyperreal.coe_zero_fn, Hyperreal.coe_pow, Hyperreal.coe_mul_fn _ _] at hx ⊢
+  rw [Filter.Germ.coe_eq]
+  filter_upwards [hx] with n hxn
+  simp only [pow_fn_eq, Pi.mul_apply, Pi.zero_apply] at hxn ⊢
+  apply Real.rpow_mul (le_of_lt hxn) _ _
 
 @[simp]
 lemma Hyperreal.pow_zero (x:Hyperreal) : x^(0:Hyperreal) = 1 := by
@@ -444,6 +465,7 @@ lemma OrderOfMagnitude.pow_one (X: OrderOfMagnitude) : (X^(1:ℝ)) = X := by
 
 noncomputable instance OrderOfMagnitude.inv : Inv OrderOfMagnitude := ⟨ fun X ↦ X ^ (-1:ℝ) ⟩
 
+
 noncomputable instance OrderOfMagnitude.group  : Group (OrderOfMagnitude) := Group.ofLeftAxioms
 (by
   intro X Y Z
@@ -469,6 +491,8 @@ noncomputable instance OrderOfMagnitude.group  : Group (OrderOfMagnitude) := Gro
   exact x.property
 )
 
+@[simp]
+lemma OrderOfMagnitude.div_eq (X Y:OrderOfMagnitude) : X / Y = X * Y^(-1:ℝ) := rfl
 
 noncomputable instance OrderOfMagnitude.comm_group  : CommGroup (OrderOfMagnitude) := {
   mul_comm := by
@@ -534,24 +558,31 @@ lemma power_i (X Y: OrderOfMagnitude) (α: ℝ) : (X * Y)^α = X^α * Y^α := by
   simp only [←PositiveHyperreal.order_mul, ←PositiveHyperreal.order_pow]
   congr
   simp [Subtype.eq_iff, PositiveHyperreal.pow_coe]
-  apply Hyperreal.mul_pow
-  . exact le_of_lt x.property
-  exact le_of_lt y.property
+  exact Hyperreal.mul_pow (le_of_lt x.property) (le_of_lt y.property) _
 
 lemma power_i' (X Y: OrderOfMagnitude) (α: ℝ) : (X / Y)^α = X^α / Y^α := by
   obtain ⟨ x, rfl ⟩ := PositiveHyperreal.order_surjective X
   obtain ⟨ y, rfl ⟩ := PositiveHyperreal.order_surjective Y
-  sorry
+  simp only [OrderOfMagnitude.div_eq, ← PositiveHyperreal.order_pow, ←PositiveHyperreal.order_mul]
+  congr
+  simp [Subtype.eq_iff, PositiveHyperreal.pow_coe]
+  rw [Hyperreal.mul_pow (le_of_lt x.property), ←Hyperreal.pow_mul y.property, ←Hyperreal.pow_mul y.property]
+  . congr 2
+    exact mul_comm _ _
+  apply le_of_lt (Hyperreal.pow_of_pos _ y.property)
 
 lemma power_ii (X: OrderOfMagnitude) (α: ℝ) : X^(α * β) = (X^α)^β := by
   obtain ⟨ x, rfl ⟩ := PositiveHyperreal.order_surjective X
   simp only [←PositiveHyperreal.order_pow]
   congr 1
-  sorry
+  simp only [Hyperreal.coe_mul, Subtype.eq_iff, PositiveHyperreal.pow_coe, Hyperreal.pow_mul x.property _ _]
 
 @[simp]
 lemma power_iv (α: ℝ) : (1:OrderOfMagnitude)^α = 1 := by
-  sorry
+  simp [←PositiveHyperreal.order_one, ←PositiveHyperreal.order_pow]
+  congr
+  simp only [Subtype.eq_iff, PositiveHyperreal.pow_coe]
+  convert Hyperreal.pow_of_one _
 
 lemma power_v (X Y: OrderOfMagnitude) (α: ℝ) : (X + Y)^α = X^α + Y^α := by
   sorry
