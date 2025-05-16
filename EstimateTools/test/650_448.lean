@@ -1,5 +1,4 @@
 import Mathlib.Tactic
-import Canonical
 
 class Magma (α : Type _) where
   op : α → α → α
