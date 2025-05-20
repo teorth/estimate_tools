@@ -135,18 +135,15 @@ lemma limit_iff (f:ℝ → ℝ) (L x₀:ℝ) : limit f L x₀ ↔ Filter.Tendsto
 
 lemma limit_add' (f g : ℝ → ℝ) (L M : ℝ) (x_0 : ℝ) :
   limit f L x_0 → limit g M x_0 → limit (fun x => f x + g x) (L + M) x_0  := by
-  rw [limit_iff, limit_iff, limit_iff]
-  intro h1 h2
-  exact Filter.Tendsto.add h1 h2
+  simp only [limit_iff]
+  exact Filter.Tendsto.add
 
 lemma limit_sub' (f g : ℝ → ℝ) (L M : ℝ) (x_0 : ℝ) :
   limit f L x_0 → limit g M x_0 → limit (fun x => f x - g x) (L - M) x_0  := by
-  rw [limit_iff, limit_iff, limit_iff]
-  intro h1 h2
-  exact Filter.Tendsto.sub h1 h2
+  simp only [limit_iff]
+  exact Filter.Tendsto.sub
 
 lemma limit_mul' (f g : ℝ → ℝ) (L M : ℝ) (x_0 : ℝ) :
   limit f L x_0 → limit g M x_0 → limit (fun x => f x * g x) (L * M) x_0 := by
-  rw [limit_iff, limit_iff, limit_iff]
-  intro h1 h2
-  exact Filter.Tendsto.mul h1 h2
+  simp only [limit_iff]
+  exact Filter.Tendsto.mul
