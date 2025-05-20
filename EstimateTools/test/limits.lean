@@ -125,3 +125,28 @@ lemma limit_mul (f g : ℝ → ℝ) (L M : ℝ) (x_0 : ℝ) :
           have : |L| + |M| + 1 > 0 := by
             positivity
           field_simp [this]
+
+
+-- For completeness we also give the "Mathlib" way to solve these problems by appealing to the Filter.Tendsto definition of limits.
+
+lemma limit_iff (f:ℝ → ℝ) (L x₀:ℝ) : limit f L x₀ ↔ Filter.Tendsto f (nhds x₀) (nhds L) := by
+  symm
+  convert Metric.tendsto_nhds_nhds
+
+lemma limit_add' (f g : ℝ → ℝ) (L M : ℝ) (x_0 : ℝ) :
+  limit f L x_0 → limit g M x_0 → limit (fun x => f x + g x) (L + M) x_0  := by
+  rw [limit_iff, limit_iff, limit_iff]
+  intro h1 h2
+  exact Filter.Tendsto.add h1 h2
+
+lemma limit_sub' (f g : ℝ → ℝ) (L M : ℝ) (x_0 : ℝ) :
+  limit f L x_0 → limit g M x_0 → limit (fun x => f x - g x) (L - M) x_0  := by
+  rw [limit_iff, limit_iff, limit_iff]
+  intro h1 h2
+  exact Filter.Tendsto.sub h1 h2
+
+lemma limit_mul' (f g : ℝ → ℝ) (L M : ℝ) (x_0 : ℝ) :
+  limit f L x_0 → limit g M x_0 → limit (fun x => f x * g x) (L * M) x_0 := by
+  rw [limit_iff, limit_iff, limit_iff]
+  intro h1 h2
+  exact Filter.Tendsto.mul h1 h2
