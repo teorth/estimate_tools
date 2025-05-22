@@ -86,14 +86,14 @@ If $X,Y$ are positive hyperreals, we write $X \lesssim Y$ if $X \leq CY$ for som
 \begin{lemma}[Logarithm of multiplication and exponentiation]\label{log-mult}\lean{OrderOfMagnitude.log_mul,OrderOfMagnitude.log_div, OrderOfMagnitude.log_pow, OrderOfMagnitude.log_const}\leanok  For orders of magnitude $\Theta(X), \Theta(Y)$, we have $\log(1) = 0$ (and more generally $\log(C) = 0$ for any real $C>0$), $\log(\Theta(X) \Theta(Y)) = \log(\Theta(X)) + \log(\Theta(Y))$, and $\log(\Theta(X) / \Theta(Y)) = \log(\Theta(X)) - \log(\Theta(Y))$.  For any real $\alpha$, we have $\log(\Theta(X)^\alpha) = \alpha \log(\Theta(X))$.
 \end{lemma}
 
-\begin{proof}\uses{mag-arith, power-law}. Straightforward from Lemma \ref{mag-arith} and Lemma \ref{power-law}.
+\begin{proof}\uses{mag-arith, power-law}\leanok Straightforward from Lemma \ref{mag-arith} and Lemma \ref{power-law}.
 \end{proof}
 
 
-\begin{lemma}[Ordered vector space]\label{ord-vec}\uses{log-order-def}\lean{LogOrderOfMagnitude.vec, LogOrderOfMagnitude.posSMulStrictMono} $\log \O$ is a linearly ordered real vector space.
+\begin{lemma}[Ordered vector space]\label{ord-vec}\uses{log-order-def}\lean{LogOrderOfMagnitude.vec, LogOrderOfMagnitude.posSMulStrictMono}\leanok $\log \O$ is a linearly ordered real vector space.
 \end{lemma}
 
-\begin{proof}\uses{log-mult} Straightforward from Lemma \ref{log-mult}.
+\begin{proof}\uses{log-mult}\leanok Straightforward from Lemma \ref{log-mult}.
 \end{proof}
 
 \begin{lemma}[Countable saturation]\label{saturation}\lean{saturation}\leanok Let $I_1 \supset I_2 \supset \dots$ be a sequence of internal sets in the hyperreals.  If each of the $I_n$ is non-empty, then $\bigcap_{n=1}^\infty I_n$ is non-empty.

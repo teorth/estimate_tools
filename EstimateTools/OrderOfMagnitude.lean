@@ -464,6 +464,14 @@ lemma OrderOfMagnitude.pow_one (X: OrderOfMagnitude) : (X^(1:ℝ)) = X := by
   congr
   simp [Subtype.eq_iff, PositiveHyperreal.pow_coe]
 
+@[simp]
+lemma OrderOfMagnitude.pow_zero (X: OrderOfMagnitude) : (X^(0:ℝ)) = 1 := by
+  obtain ⟨ x, rfl ⟩ := PositiveHyperreal.order_surjective X
+  simp [←PositiveHyperreal.order_pow]
+  congr
+  simp [Subtype.eq_iff, PositiveHyperreal.pow_coe]
+
+
 
 noncomputable instance OrderOfMagnitude.inv : Inv OrderOfMagnitude := ⟨ fun X ↦ X ^ (-1:ℝ) ⟩
 
@@ -660,6 +668,12 @@ lemma power_ix' (X Y: OrderOfMagnitude) {α: ℝ} (hα: α < 0): X < Y ↔ X^α 
   simp only [not_lt]
   exact power_ix Y X hα
 
+lemma power_x (X: OrderOfMagnitude) (α β: ℝ) : X^(α+β) = X^α * X^β := by
+  obtain ⟨ x, rfl ⟩ := PositiveHyperreal.order_surjective X
+  simp only [←PositiveHyperreal.order_pow]
+  congr
+  simp only [Hyperreal.coe_add, Subtype.eq_iff, PositiveHyperreal.pow_coe]
+  exact Hyperreal.pow_add x.property _ _
 
 abbrev LogOrderOfMagnitude := Additive OrderOfMagnitude
 
@@ -670,9 +684,11 @@ abbrev LogOrderOfMagnitude.exp : LogOrderOfMagnitude ≃ OrderOfMagnitude := Ord
 def OrderOfMagnitude.log_ordered : OrderOfMagnitude ≃o LogOrderOfMagnitude := {
   toFun := OrderOfMagnitude.log
   invFun := LogOrderOfMagnitude.exp
-  left_inv := by sorry
-  right_inv := by sorry
-  map_rel_iff' := by sorry
+  left_inv := congrFun rfl
+  right_inv := congrFun rfl
+  map_rel_iff' := by
+    intros
+    simp only [Additive.ofMul_symm_eq, Equiv.coe_fn_mk, Additive.ofMul_le]
 }
 
 def LogOrderOfMagnitude.exp_ordered : LogOrderOfMagnitude ≃o  OrderOfMagnitude := OrderOfMagnitude.log_ordered.symm
@@ -700,21 +716,45 @@ lemma OrderOfMagnitude.log_const (C: ℝ) (hC: C > 0) : (C.toPositiveHyperreal h
 
 noncomputable instance LogOrderOfMagnitude.vec : Module ℝ LogOrderOfMagnitude := {
   smul := fun α x ↦ (x.exp ^ α).log
-  one_smul := by sorry
-  mul_smul := by sorry
-  smul_zero := by sorry
-  smul_add := by sorry
-  add_smul := by sorry
-  zero_smul := by sorry
+  one_smul := by
+    intro x
+    change (x.exp ^ (1:ℝ)).log = x.log
+    simp
+    rfl
+  mul_smul := by
+    intro α β x
+    change (x.exp ^ (α * β)).log = (((x.exp ^ β).log).exp ^ α).log
+    simp [mul_comm α β]
+    exact power_ii (Additive.toMul x) β
+  smul_zero := by
+    intro α
+    change ((0:LogOrderOfMagnitude).exp^α).log = 0
+    simp
+  smul_add := by
+    intro α x y
+    change ((x + y).exp ^ α).log = (x.exp ^ α).log + (y.exp ^ α).log
+    simp only [Additive.ofMul_symm_eq, toMul_add, power_i, ofMul_mul]
+  add_smul := by
+    intro α β x
+    change (x.exp ^ (α+β)).log = (x.exp ^ α).log + (x.exp ^ β).log
+    simp only [Additive.ofMul_symm_eq, power_x, ofMul_mul]
+  zero_smul := by
+    intro x
+    change (x.exp^(0:ℝ)).log = 0
+    simp
 }
 
+lemma LogOrderOfMagnitude.smul_def (α: ℝ) (x: LogOrderOfMagnitude) : α • x = (x.exp ^ α).log := rfl
+
 instance LogOrderOfMagnitude.posSMulStrictMono : PosSMulStrictMono ℝ LogOrderOfMagnitude := {
-  elim := by sorry
+  elim := by
+    intro α hα x y hxy
+    simp only [smul_def, Additive.ofMul_symm_eq, Additive.ofMul_lt, ←power_vii' _ _ hα]
+    convert Multiplicative.ofAdd_lt.mpr hxy
 }
 
 @[simp]
-lemma OrderOfMagnitude.log_pow (X: OrderOfMagnitude) (α: ℝ): (X^α).log = α • X.log := by
-  sorry
+lemma OrderOfMagnitude.log_pow (X: OrderOfMagnitude) (α: ℝ): (X^α).log = α • X.log := rfl
 
 abbrev internal (E : ℕ → Set ℝ) : Set Hyperreal := Filter.Germ.ofFun '' { (x : ℕ → ℝ) | ∀ᶠ n in (Filter.hyperfilter ℕ : Filter ℕ), x n ∈ E n }
 

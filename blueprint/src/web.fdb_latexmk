@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1747017021.43154 "c:/Users/teort/OneDrive/Documents/GitHub/estimate_tools/blueprint/src/web.tex" "web.pdf" "web" 1747017024.17664 2
+["pdflatex"] 1747894071.86282 "c:/Users/teort/OneDrive/Documents/GitHub/estimate_tools/blueprint/src/web.tex" "web.pdf" "web" 1747894076.95997 2
   "blueprint.sty" 1746213073 33 380e7b64027817bb38aa9902f30ab0d0 ""
   "c:/Users/teort/OneDrive/Documents/GitHub/estimate_tools/blueprint/src/web.tex" 1746213073 693 db5118225c291f0bfd785a9e95636e94 ""
   "c:/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1714339007 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -70,12 +70,12 @@
   "c:/texlive/2024/texmf-var/web2c/xetex/xelatex.fmt" 1714346895 10850705 8b2889a2022805b7c4f0f7aa56de77f6 ""
   "c:/texlive/2024/texmf.cnf" 1714346512 713 e69b156964470283e0530f5060668171 ""
   "chapter/intro.tex" 1746460329 65 45a500264dcd06eb47eb85fc0a47a1fc ""
-  "chapter/order_of_magnitude.tex" 1747017002 8696 68f8d89b6969ab83072c6a7ddbd5ac5d ""
+  "chapter/order_of_magnitude.tex" 1747894069 9467 0eccf76bf4f50935619f53b46fed9451 ""
   "content.tex" 1746510605 428 94460d5391de3999c78f00089aa653c0 ""
   "macros/common.tex" 1746462430 934 bfa606199b2966aa4e07e37f296dd1b2 ""
   "macros/web.tex" 1746213073 260 cdb7c9ac756cf5815dc98c2bb10a4f5b ""
-  "web.aux" 1747017023 1980 3f42f129941a0d1417c92646fa427e0c "pdflatex"
-  "web.out" 1747017023 247 2c37c253d7070eb2db3a41875be76d7f "pdflatex"
+  "web.aux" 1747894076 1980 3f42f129941a0d1417c92646fa427e0c "pdflatex"
+  "web.out" 1747894076 247 2c37c253d7070eb2db3a41875be76d7f "pdflatex"
   "web.tex" 1746213073 693 db5118225c291f0bfd785a9e95636e94 ""
   (generated)
   "web.aux"
