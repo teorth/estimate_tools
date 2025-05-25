@@ -778,33 +778,72 @@ lemma saturation (I : ℕ → Set Hyperreal) (hI : ∀ n, is_internal (I n)) (hI
   let f : Filter ℕ := Filter.hyperfilter ℕ
   let E := fun n ↦ (hI n).choose
   have hE (n:ℕ) : I n = internal (E n) := (hI n).choose_spec
-  let F : ℕ → Set ℕ := fun n₀ ↦ {m:ℕ| m ≥ n₀ ∧ Nonempty (⋂ n ≤ n₀, E n m)}
+  let F : ℕ → Set ℕ := fun n₀ ↦ {m:ℕ| m ≥ n₀ ∧ (⋂ n ∈ Finset.Iio n₀, E n m).Nonempty}
   have hmono_I : Antitone I := antitone_nat_of_succ_le hI''
 
+  have hlarge (n₀:ℕ) : ∀ᶠ m in f, m ≥ n₀ := (Nat.cofinite_eq_atTop ▸ Filter.hyperfilter_le_cofinite) $ Filter.Tendsto.eventually_ge_atTop (fun ⦃U⦄ a ↦ a) n₀
+
   have hnon (n₀:ℕ) : F n₀ ∈ f := by
-    have hmem_I : ∃ x, ∀ n ≤ n₀, x ∈ I n := by
+    have hmem_I : ∃ x, ∀ n < n₀, x ∈ I n := by
       use (hI' n₀).some
       intro n hn
-      exact hmono_I hn (hI' n₀).some_mem
+      exact hmono_I (le_of_lt hn) (hI' n₀).some_mem
     set y : ℕ → ℝ := (to_hyperreal_surjective hmem_I.choose).choose
-    have hy : ∀ᶠ m in f, ∀ n ∈ Finset.Iic n₀, y m ∈ E n m := by
+    have hy : ∀ᶠ m in f, ∀ n ∈ Finset.Iio n₀, y m ∈ E n m := by
       rw [Filter.eventually_all_finset]
       intro n hn
       rw [←mem_internal _ _, ← hE n]
-      convert hmem_I.choose_spec n $ Finset.mem_Iic.mp hn
+      convert hmem_I.choose_spec n $ Finset.mem_Iio.mp hn
       exact (to_hyperreal_surjective hmem_I.choose).choose_spec
-    have hlarge : ∀ᶠ m in f, m ≥ n₀ := (Nat.cofinite_eq_atTop ▸ Filter.hyperfilter_le_cofinite) $ Filter.Tendsto.eventually_ge_atTop (fun ⦃U⦄ a ↦ a) n₀
-    filter_upwards [hy, hlarge] with m hm hm'
+    filter_upwards [hy, hlarge n₀] with m hm hm'
     simp only [ge_iff_le, nonempty_subtype, Set.mem_iInter, Set.mem_setOf_eq, hm', true_and, F]
     use y m
-    intro n hn
-    exact hm n (Finset.mem_Iic.mpr hn)
+    simp only [Set.mem_iInter]
+    exact hm
   let N : ℕ → ℕ := fun m ↦ sSup { n₀ : ℕ | m ∈ F n₀ }
-  have hN (m:ℕ): Nonempty (⋂ n : Fin (N m), E n m) := by sorry
+
+  have hN_bounded (m:ℕ) : BddAbove {n₀ | m ∈ F n₀} := by
+    use m
+    intro n₀ hn₀
+    simp only [Set.mem_setOf_eq, F] at hn₀
+    exact hn₀.1
+
+  have hN' (m:ℕ) : m ∈ F (N m) := by
+    have : N m ∈ { n₀ : ℕ | m ∈ F n₀ } := by
+      apply Nat.sSup_mem
+      . use 0
+        simp [F]
+      rw [bddAbove_def]
+      exact hN_bounded m
+    simp only [Set.mem_setOf_eq, F] at this
+    exact this
+
+  have hN'' (m:ℕ) : N m ≤ m := by
+    replace hN' := hN' m
+    simp [F] at hN'
+    exact hN'.1
+
+  have hN (m:ℕ): (⋂ n ∈ Finset.Iio (N m), E n m).Nonempty := by
+    replace hN' := hN' m
+    simp only [Set.mem_setOf_eq, F] at hN'
+    exact hN'.2
   let x : ℕ → ℝ := fun m ↦ (hN m).some
   use Filter.Germ.ofFun x
   intro n
-  sorry
+  rw [hE n, mem_internal]
+  have : ∀ᶠ m in f, n ∈ Finset.Iio (N m) := by
+     filter_upwards [hnon (n+1)] with m hm
+     simp [N]
+     change n+1 ≤ sSup {n₀ | m ∈ F n₀}
+     apply ConditionallyCompleteLattice.le_csSup _ _
+     . exact hN_bounded m
+     simp only [Set.mem_setOf_eq, hm]
+  filter_upwards [this] with m hm
+  have : x m ∈ (⋂ n ∈ Finset.Iio (N m), E n m) := (hN m).some_mem
+  simp only [Set.mem_iInter] at this
+  exact this n hm
+
+
 
 lemma Hyperreal.Ioi_internal (a b: Hyperreal) : ∃ E : ℕ → ℕ → Set ℝ, Set.Ioo a b = ⋂ n, internal (E n) := by
   sorry
