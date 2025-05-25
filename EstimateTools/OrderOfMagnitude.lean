@@ -245,6 +245,9 @@ noncomputable instance Hyperreal.pow : Pow Hyperreal Hyperreal := ⟨ Filter.Ger
 
 noncomputable abbrev to_hyperreal (x: ℕ → ℝ) : Hyperreal := Filter.Germ.ofFun x
 
+lemma to_hyperreal_surjective : Function.Surjective to_hyperreal := by
+  convert Quotient.mk'_surjective
+
 noncomputable instance pow_fn : Pow (ℕ → ℝ) (ℕ → ℝ) := {
   pow := fun x y ↦ fun n ↦ x n ^ y n
 }
@@ -760,12 +763,42 @@ abbrev internal (E : ℕ → Set ℝ) : Set Hyperreal := Filter.Germ.ofFun '' { 
 
 abbrev is_internal (E : Set Hyperreal) : Prop := ∃ E' : ℕ → Set ℝ, E = internal E'
 
-lemma saturation (I : ℕ → Set Hyperreal) (hI : ∀ n, is_internal (I n)) (hI' : ∀ n, I n ≠ ∅) (hI'' : ∀ n, I (n+1) ⊆ I n): ∃ x : Hyperreal, ∀ n, x ∈ I n := by
+lemma mem_internal (x: ℕ → ℝ) (E : ℕ → Set ℝ) : to_hyperreal x ∈ internal E ↔ ∀ᶠ n in (Filter.hyperfilter ℕ : Filter ℕ), x n ∈ E n := by
+  simp only [Set.mem_image, Set.mem_setOf_eq]
+  constructor
+  . intro h
+    obtain ⟨ y, hy, hxy ⟩ := h
+    replace hxy : ∀ᶠ n in (Filter.hyperfilter ℕ : Filter ℕ), y n = x n := Quotient.exact hxy
+    filter_upwards [hxy, hy] with n h hyE
+    simp only [←h, hyE]
+  intro h
+  use x
+
+lemma saturation (I : ℕ → Set Hyperreal) (hI : ∀ n, is_internal (I n)) (hI' : ∀ n, (I n).Nonempty) (hI'' : ∀ n, I (n+1) ⊆ I n): ∃ x : Hyperreal, ∀ n, x ∈ I n := by
   let f : Filter ℕ := Filter.hyperfilter ℕ
   let E := fun n ↦ (hI n).choose
   have hE (n:ℕ) : I n = internal (E n) := (hI n).choose_spec
-  let F : ℕ → Set ℕ := fun n₀ ↦ {m:ℕ| m ≥ n₀ ∧ Nonempty (⋂ n : Fin n₀, E n m)}
-  have hnon (n₀:ℕ) : F n₀ ∈ f := by sorry
+  let F : ℕ → Set ℕ := fun n₀ ↦ {m:ℕ| m ≥ n₀ ∧ Nonempty (⋂ n ≤ n₀, E n m)}
+  have hmono_I : Antitone I := antitone_nat_of_succ_le hI''
+
+  have hnon (n₀:ℕ) : F n₀ ∈ f := by
+    have hmem_I : ∃ x, ∀ n ≤ n₀, x ∈ I n := by
+      use (hI' n₀).some
+      intro n hn
+      exact hmono_I hn (hI' n₀).some_mem
+    set y : ℕ → ℝ := (to_hyperreal_surjective hmem_I.choose).choose
+    have hy : ∀ᶠ m in f, ∀ n ∈ Finset.Iic n₀, y m ∈ E n m := by
+      rw [Filter.eventually_all_finset]
+      intro n hn
+      rw [←mem_internal _ _, ← hE n]
+      convert hmem_I.choose_spec n $ Finset.mem_Iic.mp hn
+      exact (to_hyperreal_surjective hmem_I.choose).choose_spec
+    have hlarge : ∀ᶠ m in f, m ≥ n₀ := (Nat.cofinite_eq_atTop ▸ Filter.hyperfilter_le_cofinite) $ Filter.Tendsto.eventually_ge_atTop (fun ⦃U⦄ a ↦ a) n₀
+    filter_upwards [hy, hlarge] with m hm hm'
+    simp only [ge_iff_le, nonempty_subtype, Set.mem_iInter, Set.mem_setOf_eq, hm', true_and, F]
+    use y m
+    intro n hn
+    exact hm n (Finset.mem_Iic.mpr hn)
   let N : ℕ → ℕ := fun m ↦ sSup { n₀ : ℕ | m ∈ F n₀ }
   have hN (m:ℕ): Nonempty (⋂ n : Fin (N m), E n m) := by sorry
   let x : ℕ → ℝ := fun m ↦ (hN m).some
