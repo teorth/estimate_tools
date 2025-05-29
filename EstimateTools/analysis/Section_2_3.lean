@@ -84,7 +84,7 @@ instance Nat.commSemiring_inst : CommSemiring Nat where
   mul_one := mul_one
   mul_comm := mul_comm
 
-/-- Proposition 2.3.6 (Multiplication preserves order) -/ -/
+/-- Proposition 2.3.6 (Multiplication preserves order) -/
 theorem mul_lt_mul_of_pos_right {a b c: Nat} (h: a < b) (hc: c.isPos) : a * c < b * c := by
   -- This proof is written to follow the structure of the original text.
   rw [lt_iff_add_pos] at h
