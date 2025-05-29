@@ -79,8 +79,8 @@ theorem add_assoc (a b c:Nat) : (a + b) + c = a + (b + c) := by
 
 /-- Proposition 2.2.6 (Cancellation law). -/
 theorem add_cancel_left (a b c:Nat) (habc: a + b = a + c) : b = c := by
--- this proof is written to follow the structure of the original text.
-revert a; apply induction
+  -- this proof is written to follow the structure of the original text.
+  revert a; apply induction
   . intro hbc
     rwa [zero_add, zero_add] at hbc
   intro a ih
