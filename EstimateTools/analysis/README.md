@@ -1,10 +1,10 @@
 # Partial Lean formalization of _Analysis I_
 
-The files in this directory contain a formalization of selected portions of my text _Analysis I_ into Lean. The formalization is intended to be as faithful as possible to the original text, while also showcasing Lean's features and syntax.  In particular, the formalization is _not_ optimized for efficiency, and in some cases may deviate from idiomatic Lean usage.
+The files in this directory contain a formalization of selected portions of my text _Analysis I_ into Lean. The formalization is intended to be as faithful a paraphrasing as possible to the original text, while also showcasing Lean's features and syntax.  In particular, the formalization is _not_ optimized for efficiency, and in some cases may deviate from idiomatic Lean usage.
 
 Portions of the text that were left as exercises to the reader are rendered in this translation as `sorry`s.  Readers are welcome to fork the repository here to try their hand at these exercises, but I do not intend to place solutions in this repository directly.
 
-The files here focus on the definitions, theorems, and exercises of the text; informal discussion is not included here.  As such, this formalization should be viewed as an annotated companion to the primary text, rather than a replacement for it.
+While the arrangement of definitions, theorems, and proofs here are closely paraphrasing the textbook, I am refraining from directly quoting material from the textbook, instead providing references to the original text where appropriate.  As such, this formalization should be viewed as an annotated companion to the primary text, rather than a replacement for it.
 
 Currently formalized sections:
 

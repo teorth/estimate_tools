@@ -3,9 +3,9 @@ import Mathlib.Tactic
 /-!
 # Analysis I, Section 2.1
 
-This file is a translation of Section 2.1 of Analysis I to Lean 4.
+This file is a translation of Section 2.1 of Analysis I to Lean 4.  All numbering refers to the original text.
 
-I have attempted to make the translation as faithful as possible to the original text.  When there is a choice between a more idiomatic Lean solution and a more faithful translation, I have generally chosen the latter.  In particular, there will be places where the Lean code could be "golfed" to be more elegant and idiomatic, but I have consciously avoided doing so.
+I have attempted to make the translation as faithful a paraphrasing as possible of  the original text.  When there is a choice between a more idiomatic Lean solution and a more faithful translation, I have generally chosen the latter.  In particular, there will be places where the Lean code could be "golfed" to be more elegant and idiomatic, but I have consciously avoided doing so.
 
 Main results of this section:
 
@@ -19,23 +19,22 @@ Note: at the end of this Chapter, the `Chapter2.Nat` class will be deprecated in
 
 namespace Chapter2
 
-/-- Assumption 2.6: There exists a number system N, whose elements we call natural numbers, for which the Peano axioms 2.1-2-5 are true.
- -/
+/-- Assumption 2.6 (Existence of natural numbers) -/
 inductive Nat where
 | zero : Nat
 | succ : Nat → Nat
 deriving Repr, DecidableEq  -- this allows `decide` to work on `Nat`
 
-/-- Axiom 2.1: 0 is a natural number. -/
+/-- Axiom 2.1 (0 is a natural number) -/
 instance Nat.zero_inst : Zero Nat := ⟨ Nat.zero ⟩
 #check (0:Nat)
 
-/- Axiom 2.2: Successor of a natural number is a natural number. -/
+/- Axiom 2.2 (Successor of a natural number is a natural number) -/
 postfix:100 "++" => Nat.succ
 #check (fun n ↦ n++)
 
 
-/-- Definition 2.1.3: We define 1 to be the number 0++, 2 to be the number (0++)++, etc. Note: to avoid ambiguity, one may need to use explicit casts such as (0:Nat), (1:Nat), etc. to refer to this Chapter's version of the natural numbers. -/
+/-- Definition 2.1.3 (Definition of the numerals 0, 1, 2, etc.). Note: to avoid ambiguity, one may need to use explicit casts such as (0:Nat), (1:Nat), etc. to refer to this Chapter's version of the natural numbers. -/
 instance Nat.ofnat_inst {n:_root_.Nat} : OfNat Nat n where
   ofNat := _root_.Nat.rec 0 (fun _ n ↦ n++) n
 
@@ -46,23 +45,23 @@ lemma zero_succ : 0++ = 1 := by rfl
 lemma one_succ : 1++ = 2 := by rfl
 #check (2:Nat)
 
-/-- Proposition 2.1.4: 3 is a natural number.-/
+/-- Proposition 2.1.4 (3 is a natural number)-/
 lemma two_succ : 2++ = 3 := by rfl
 #check (3:Nat)
 
-/-- Axiom 2.3: 0 is not the successor of any natural number. -/
+/-- Axiom 2.3 (0 is not the successor of any natural number) -/
 theorem succ_ne (n:Nat) : n++ ≠ 0 := by
   by_contra h
   simp only [reduceCtorEq] at h
 
-/-- Proposition 2.1.6: 4 is not equal to zero. -/
+/-- Proposition 2.1.6 (4 is not equal to zero) -/
 theorem four_ne : (4:Nat) ≠ 0 := by
   -- By definition, 4 = 3++.
   change 3++ ≠ 0
   -- By axiom 2.3, 3++ is not zero.
   exact succ_ne _
 
-/-- Axiom 2.4: Different natural numbers must have different successors. -/
+/-- Axiom 2.4 (Different natural numbers have different successors) -/
 theorem succ_cancel {n m:Nat} (hnm: n++ = m++) : n = m := by
   rwa [Nat.succ.injEq] at hnm
 
@@ -71,19 +70,14 @@ theorem succ_ne_succ (n m:Nat) : n ≠ m → n++ ≠ m++ := by
   contrapose! h
   exact succ_cancel h
 
-/-- Proposition 2.1.8: 6 is not equal to 2. -/
+/-- Proposition 2.1.8 (6 is not equal to 2) -/
 theorem six_ne_two : (6:Nat) ≠ 2 := by
--- Suppose for sake of conradiction that 6 = 2.
+-- this proof is written to follow the structure of the original text.
   by_contra h
--- Then 5++ = 1++
   change 5++ = 1++ at h
---  , so by Axiom 2.4 we have 5 = 1,
   replace h := succ_cancel h
--- so that 4++ = 0++
   change 4++ = 0++ at h
--- , so that 4 = 0.
   replace h := succ_cancel h
--- which contradicts our previous proposition.
   have := four_ne
   contradiction
 
@@ -91,7 +85,7 @@ theorem six_ne_two : (6:Nat) ≠ 2 := by
 theorem six_ne_two' : (6:Nat) ≠ 2 := by
   decide
 
-/-- Axiom 2.5 (principle of mathematical induction)  Let P(n) be any property pertaining to a natural number n.  Suppose that P(0) is true, and suppose that whenever P(n) is true, P(n++) is true.  Then P(n) is true for every natural number n. -/
+/-- Axiom 2.5 (principle of mathematical induction). -/
 theorem induction (P : Nat → Prop) (hbase : P 0) (hind : ∀ n, P n → P (n++)) : ∀ n, P n := by
   intro n
   induction n with
@@ -102,7 +96,7 @@ abbrev Nat.recurse (f: Nat → Nat → Nat) (c: Nat) : Nat → Nat := fun n ↦ 
 | 0 => c
 | n++ => f n (Nat.recurse f c n)
 
-/-- Proposition 2.1.16 (recursive definitions) Suppose for each natural number n, we have some function f_n: N → N from the natural numbers to the natural numbers.  Then we can assign a unique natural number a_n to each natural number n, such that a_0 = c and a_{n++} = f_n(a_n) for all n. -/
+/-- Proposition 2.1.16 (recursive definitions). -/
 theorem recurse_zero (f: Nat → Nat → Nat) (c: Nat) : Nat.recurse f c 0 = c := by rfl
 
 theorem recurse_succ (f: Nat → Nat → Nat) (c: Nat) (n: Nat) : Nat.recurse f c (n++) = f n (Nat.recurse f c n) := by rfl
@@ -110,13 +104,10 @@ theorem recurse_succ (f: Nat → Nat → Nat) (c: Nat) (n: Nat) : Nat.recurse f 
 theorem eq_recurse (f: Nat → Nat → Nat) (c: Nat) (a: Nat → Nat) : (a 0 = c ∧ ∀ n, a (n++) = f n (a n)) ↔ a = Nat.recurse f c := by
   constructor
   . intro ⟨ h0, hsucc ⟩
-    -- We use induction.
+    -- this proof is written to follow the structure of the original text.
     apply funext; apply induction
-    . -- We first observe that this procedure gives a single value to a_0, namely c.
-      exact h0
-    -- Now suppose inductively that the proposition gives a single value to a_n.
+    . exact h0
     intro n hn
-    -- Then it gives a single value to a_{n++}, namely f_n(a_n).
     rw [hsucc n, recurse_succ, hn]
   intro h
   rw [h]
