@@ -120,10 +120,13 @@ theorem prop_2_2_6 (a b c:Nat) (habc: a + b = a + c) : b = c := by
   exact ih hbc
 
 
-/-- (Not from textbook) Nat can be given the structure of a commutative additive semigroup. -/
-instance Nat.addCommSemigroup : AddCommSemigroup Nat where
+/-- (Not from textbook) Nat can be given the structure of a commutative additive monoid. -/
+instance Nat.addCommMonoid : AddCommMonoid Nat where
   add_assoc := prop_2_2_5
   add_comm := prop_2_2_4
+  zero_add := def_2_2_1_a
+  add_zero := lemma_2_2_2
+  nsmul := nsmulRec
 
 /-- Definition 2.2.7 (Positive natural numbers). A natural number n is said to be positive iff it is not equal to 0.-/
 def Nat.isPos (n:Nat) : Prop := n ≠ 0
@@ -291,6 +294,19 @@ theorem prop_2_2_13 (a b:Nat) : a < b ∨ a = b ∨ a > b := by
   have why : a++ > b := by sorry
   tauto
   -- This closes the induction.
+
+/-- (Not from textbook) The order is decidable.  This exercise is only recommended for Lean experts. -/
+instance Nat.decidableRel : DecidableRel (· ≤ · : Nat → Nat → Prop) := by
+  sorry
+
+/-- (Not from textbook) Nat has the structure of a linear ordering. -/
+instance Nat.linearOrder : LinearOrder Nat where
+  le_refl := prop_2_2_12_a
+  le_trans := fun a b c hab hbc ↦ prop_2_2_12_b hbc hab
+  lt_iff_le_not_le := sorry
+  le_antisymm := fun a b hab hba ↦ prop_2_2_12_c hba hab
+  le_total := sorry
+  toDecidableLE := decidableRel
 
 
 /-- Proposition 2.2.14 (Strong principle of induction). Let m₀ be a natural number, and let P(m) be a property pertaining to an arbitrary natural number m. Suppose that for each m ≥ m₀, we have the following implication:
