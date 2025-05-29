@@ -9,3 +9,4 @@ Currently formalized sections:
 - [Section 2.1: The Peano axioms](./Section_2_1.lean)
 - [Section 2.2: Addition](./Section_2_2.lean)
 - [Section 2.3: Multiplication](./Section_2_3.lean)
+- [Chapter 2 epilogue: Isomorphism with the Mathlib natural numbers](./Chapter_2_epilogue.lean)
