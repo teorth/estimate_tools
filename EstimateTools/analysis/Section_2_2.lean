@@ -73,11 +73,11 @@ theorem add_comm (n m:Nat) : n + m = m + n := by
   rw [succ_add]
   rw [add_succ, ih]
 
-/-- Proposition 2.2.5 (Addition is associative).-/
+/-- Proposition 2.2.5 (Addition is associative) / Exercise 2.2.1-/
 theorem add_assoc (a b c:Nat) : (a + b) + c = a + (b + c) := by
   sorry
 
-/-- Proposition 2.2.6 (Cancellation law). -/
+/-- Proposition 2.2.6 (Cancellation law) -/
 theorem add_cancel_left (a b c:Nat) (habc: a + b = a + c) : b = c := by
   -- this proof is written to follow the structure of the original text.
   revert a; apply induction
@@ -130,7 +130,7 @@ theorem add_eq_zero (a b:Nat) (hab: a + b = 0) : a = 0 ∧ b = 0 := by
   have : (a + b).isPos := add_pos _ hb
   contradiction
 
-/-- Lemma 2.2.10 (unique predecessor)-/
+/-- Lemma 2.2.10 (unique predecessor) / Exercise 2.2.2 -/
 lemma uniq_succ_eq (a:Nat) (ha: a.isPos) : ∃! b, b++ = a := by
   sorry
 
@@ -152,7 +152,12 @@ lemma Nat.gt_iff_lt (n m:Nat) : n > m ↔ m < n := by rfl
 lemma Nat.le_of_lt {n m:Nat} (hnm: n < m) : n ≤ m := hnm.1
 
 lemma Nat.le_iff_lt_or_eq (n m:Nat) : n ≤ m ↔ n < m ∨ n = m := by
-  sorry
+  rw [Nat.le_iff, Nat.lt_iff]
+  by_cases h : n = m
+  . simp [h]
+    use 0
+    rw [add_zero]
+  simp [h]
 
 example : (8:Nat) > 5 := by
   rw [Nat.gt_iff_lt, Nat.lt_iff]
@@ -165,7 +170,9 @@ example : (8:Nat) > 5 := by
 theorem Nat.succ_gt (n:Nat) : n++ > n := by
   sorry
 
-/-- Proposition 2.2.12 (Basic properties of order for natural numbers). (a) (Order is reflexive). -/
+/-- Proposition 2.2.12 (Basic properties of order for natural numbers) / Exercise 2.2.3
+
+(a) (Order is reflexive). -/
 theorem ge_refl (a:Nat) : a ≥ a := by
   sorry
 
@@ -213,7 +220,7 @@ theorem not_lt_of_gt (a b:Nat) : a < b ∧ a > b → False := by
   contradiction
 
 
-/-- Proposition 2.2.13 (Trichotomy of order for natural numbers)-/
+/-- Proposition 2.2.13 (Trichotomy of order for natural numbers) / Exercise 2.2.4 -/
 theorem trichotomous (a b:Nat) : a < b ∨ a = b ∨ a > b := by
   -- this proof is written to follow the structure of the original text.
   revert a; apply induction
@@ -250,7 +257,7 @@ instance Nat.isOrderedAddMonoid : IsOrderedAddMonoid Nat where
     intro a b hab c
     exact (add_le_add_left a b c).mp hab
 
-/-- Proposition 2.2.14 (Strong principle of induction)
+/-- Proposition 2.2.14 (Strong principle of induction) / Exercise 2.2.5
 -/
 theorem strong_induction {m₀:Nat} {P: Nat → Prop} (hind: ∀ m, m ≥ m₀ → (∀ m', m₀ ≤ m' ∧ m' < m → P m') → P m) : ∀ m, m ≥ m₀ → P m := by
   sorry
