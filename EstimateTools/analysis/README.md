@@ -14,3 +14,6 @@ Currently formalized sections:
 - [Chapter 2 epilogue: Isomorphism with the Mathlib natural numbers](https://teorth.github.io/estimate_tools/docs/EstimateTools/analysis/Section_2_epilogue.html)
 - [Section 3.1: Set theory fundamentals](https://teorth.github.io/estimate_tools/docs/EstimateTools/analysis/Section_3_1.html)
 - [Section 4.1: The integers](https://teorth.github.io/estimate_tools/docs/EstimateTools/analysis/Section_4_1.html)
+
+
+For instructions on how to run this project locally, see [here](https://leanprover-community.github.io/install/project.html).
