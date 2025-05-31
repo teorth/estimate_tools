@@ -105,6 +105,7 @@ theorem Set.empty_unique : ∃! (X:Set), ∀ x, ¬ x ∈ X := by
 
 /-- Lemma 3.1.5 (Single choice) -/
 lemma Set.nonempty_def {X:Set} (h: X ≠ ∅) : ∃ x, x ∈ X := by
+  -- This proof is written to follow the structure of the original text.
   by_contra! this
   have claim (x:Object) : x ∈ X ↔ x ∈ (∅:Set) := by
     simp [this, Set.not_mem_empty]

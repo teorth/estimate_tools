@@ -12,3 +12,5 @@ Currently formalized sections:
 - [Section 2.2: Addition](https://teorth.github.io/estimate_tools/docs/EstimateTools/analysis/Section_2_2.html)
 - [Section 2.3: Multiplication](https://teorth.github.io/estimate_tools/docs/EstimateTools/analysis/Section_2_3.html)
 - [Chapter 2 epilogue: Isomorphism with the Mathlib natural numbers](https://teorth.github.io/estimate_tools/docs/EstimateTools/analysis/Section_2_epilogue.html)
+- [Section 3.1: Set theory fundamentals](https://teorth.github.io/estimate_tools/docs/EstimateTools/analysis/Section_3_1.html)
+- [Section 4.1: The integers](https://teorth.github.io/estimate_tools/docs/EstimateTools/analysis/Section_4_1.html)
