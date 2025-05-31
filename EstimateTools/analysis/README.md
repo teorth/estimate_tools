@@ -17,5 +17,10 @@ Currently formalized sections:
 - [Section 3.1: Set theory fundamentals](https://teorth.github.io/estimate_tools/docs/EstimateTools/analysis/Section_3_1.html)
 - [Section 4.1: The integers](https://teorth.github.io/estimate_tools/docs/EstimateTools/analysis/Section_4_1.html)
 
-
-For instructions on how to run this project locally, see [here](https://leanprover-community.github.io/install/project.html).
+Other resources:
+- [How to run a project in Lean locally](https://leanprover-community.github.io/install/project.html).
+- [The natural number game](https://adam.math.hhu.de/)
+- [The Lean community](https://leanprover-community.github.io/)
+- [Mathematics in Lean](https://leanprover-community.github.io/mathematics_in_lean/)
+- [Blog post announcing this project](https://terrytao.wordpress.com/2025/05/31/a-lean-companion-to-analysis-i/), Terence Tao, May 31 2025.
+- [Lean Zulip discussion about this project](https://leanprover.zulipchat.com/#narrow/channel/113488-general/topic/Lean.20companion.20to.20.22Analysis.20I.22.20-.20discussion/with/521458888)
