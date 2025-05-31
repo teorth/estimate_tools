@@ -7,7 +7,7 @@ This file is a translation of Section 2.1 of Analysis I to Lean 4.  All numberin
 
 I have attempted to make the translation as faithful a paraphrasing as possible of  the original text.  When there is a choice between a more idiomatic Lean solution and a more faithful translation, I have generally chosen the latter.  In particular, there will be places where the Lean code could be "golfed" to be more elegant and idiomatic, but I have consciously avoided doing so.
 
-Main results of this section:
+Main constructions and results of this section:
 
 - Definition of the "Chapter 2" natural numbers, `Chapter2.Nat`
 - Establishment of the Peano axioms for `Chapter2.Nat`
@@ -65,6 +65,7 @@ theorem four_ne : (4:Nat) ≠ 0 := by
 theorem succ_cancel {n m:Nat} (hnm: n++ = m++) : n = m := by
   rwa [Nat.succ.injEq] at hnm
 
+/-- Axiom 2.4 (Different natural numbers have different successors) -/
 theorem succ_ne_succ (n m:Nat) : n ≠ m → n++ ≠ m++ := by
   intro h
   contrapose! h
@@ -99,8 +100,10 @@ abbrev Nat.recurse (f: Nat → Nat → Nat) (c: Nat) : Nat → Nat := fun n ↦ 
 /-- Proposition 2.1.16 (recursive definitions). -/
 theorem recurse_zero (f: Nat → Nat → Nat) (c: Nat) : Nat.recurse f c 0 = c := by rfl
 
+/-- Proposition 2.1.16 (recursive definitions). -/
 theorem recurse_succ (f: Nat → Nat → Nat) (c: Nat) (n: Nat) : Nat.recurse f c (n++) = f n (Nat.recurse f c n) := by rfl
 
+/-- Proposition 2.1.16 (recursive definitions). -/
 theorem eq_recurse (f: Nat → Nat → Nat) (c: Nat) (a: Nat → Nat) : (a 0 = c ∧ ∀ n, a (n++) = f n (a n)) ↔ a = Nat.recurse f c := by
   constructor
   . intro ⟨ h0, hsucc ⟩
@@ -115,6 +118,8 @@ theorem eq_recurse (f: Nat → Nat → Nat) (c: Nat) (a: Nat → Nat) : (a 0 = c
   . exact recurse_zero _ _
   exact recurse_succ _ _
 
+
+/-- Proposition 2.1.16 (recursive definitions). -/
 theorem recurse_uniq (f: Nat → Nat → Nat) (c: Nat) : ∃! (a: Nat → Nat), a 0 = c ∧ ∀ n, a (n++) = f n (a n) := by
 apply ExistsUnique.intro (Nat.recurse f c)
 . constructor

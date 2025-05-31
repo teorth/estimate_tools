@@ -8,7 +8,7 @@ This file is a translation of Section 2.2 of Analysis I to Lean 4.  All numberin
 
 I have attempted to make the translation as faithful a paraphrasing as possible of  the original text.   When there is a choice between a more idiomatic Lean solution and a more faithful translation, I have generally chosen the latter.  In particular, there will be places where the Lean code could be "golfed" to be more elegant and idiomatic, but I have consciously avoided doing so.
 
-Main results of this section:
+Main constructions and results of this section:
 
 - Definition of addition and order for the "Chapter 2" natural numbers, `Chapter2.Nat`
 - Establishment of basic properties of addition and order
@@ -138,6 +138,7 @@ lemma uniq_succ_eq (a:Nat) (ha: a.isPos) : ∃! b, b++ = a := by
 instance Nat.LE_inst : LE Nat where
   le := fun n m ↦ ∃ a:Nat, m = n + a
 
+/-- Definition 2.2.11 (Ordering of the natural numbers) -/
 instance Nat.LT_inst : LT Nat where
   lt := fun n m ↦ (∃ a:Nat, m = n + a) ∧ n ≠ m
 
@@ -188,12 +189,15 @@ theorem ge_antisymm {a b:Nat} (hab: a ≥ b) (hba: b ≥ a) : a = b := by
 theorem add_ge_add_right (a b c:Nat) : a ≥ b ↔ a + c ≥ b + c := by
   sorry
 
+/-- (d) (Addition preserves order)  -/
 theorem add_ge_add_left (a b c:Nat) : a ≥ b ↔ c + a ≥ c + b := by
   simp only [add_comm]
   exact add_ge_add_right _ _ _
 
+/-- (d) (Addition preserves order)  -/
 theorem add_le_add_right (a b c:Nat) : a ≤ b ↔ a + c ≤ b + c := add_ge_add_right _ _ _
 
+/-- (d) (Addition preserves order)  -/
 theorem add_le_add_left (a b c:Nat) : a ≤ b ↔ c + a ≤ c + b := add_ge_add_left _ _ _
 
 /-- (e) a < b iff a++ ≤ b. -/

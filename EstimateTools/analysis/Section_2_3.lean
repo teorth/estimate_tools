@@ -8,7 +8,7 @@ This file is a translation of Section 2.3 of Analysis I to Lean 4.  All numberin
 
 I have attempted to make the translation as faithful a paraphrasing as possible of  the original text.  When there is a choice between a more idiomatic Lean solution and a more faithful translation, I have generally chosen the latter.  In particular, there will be places where the Lean code could be "golfed" to be more elegant and idiomatic, but I have consciously avoided doing so.
 
-Main results of this section:
+Main constructions and results of this section:
 
 - Definition of multiplication and exponentiation for the "Chapter 2" natural numbers, `Chapter2.Nat`
 
@@ -23,8 +23,10 @@ abbrev Nat.mul (n m : Nat) : Nat := Nat.recurse (fun _ prod ↦ prod + m) 0 n
 instance Nat.mul_inst : Mul Nat where
   mul := Nat.mul
 
+/-- Definition 2.3.1 (Multiplication of natural numbers) -/
 theorem zero_mul (m: Nat) : 0 * m = 0 := recurse_zero (fun _ prod ↦ prod+m) _
 
+/-- Definition 2.3.1 (Multiplication of natural numbers) -/
 theorem succ_mul (n m: Nat) : (n++) * m = n * m + m := recurse_succ (fun _ prod ↦ prod+m) _ _
 
 theorem one_mul' (m: Nat) : 1 * m = 0 + m := by
@@ -66,6 +68,7 @@ theorem mul_add (a b c: Nat) : a * (b + c) = a * b + a * c := by
   rw [add_succ, mul_succ]
   rw [mul_succ, ←add_assoc, ←habc]
 
+/-- Proposition 2.3.4 (Distributive law)-/
 theorem add_mul (a b c: Nat) : (a + b)*c = a*c + b*c := by
   simp only [mul_comm, mul_add]
 
@@ -95,12 +98,15 @@ theorem mul_lt_mul_of_pos_right {a b c: Nat} (h: a < b) (hc: c.isPos) : a * c < 
   rw [lt_iff_add_pos]
   use d*c
 
+/-- Proposition 2.3.6 (Multiplication preserves order) -/
 theorem mul_gt_mul_of_pos_right {a b c: Nat} (h: a > b) (hc: c.isPos) : a * c > b * c := mul_lt_mul_of_pos_right h hc
 
+/-- Proposition 2.3.6 (Multiplication preserves order) -/
 theorem mul_lt_mul_of_pos_left {a b c: Nat} (h: a < b) (hc: c.isPos) : c * a < c * b := by
   simp [mul_comm]
   exact mul_lt_mul_of_pos_right h hc
 
+/-- Proposition 2.3.6 (Multiplication preserves order) -/
 theorem mul_gt_mul_of_pos_left {a b c: Nat} (h: a > b) (hc: c.isPos) : c * a > c * b := mul_lt_mul_of_pos_left h hc
 
 
@@ -135,8 +141,10 @@ abbrev Nat.pow (m n: Nat) : Nat := Nat.recurse (fun _ prod ↦ prod * m) 1 n
 instance Nat.pow_inst : HomogeneousPow Nat where
   pow := Nat.pow
 
+/-- Definition 2.3.11 (Exponentiation for natural numbers) -/
 theorem zero_pow_zero : (0:Nat) ^ 0 = 1 := recurse_zero (fun _ prod ↦ prod * 0) _
 
+/-- Definition 2.3.11 (Exponentiation for natural numbers) -/
 theorem zero_pow_succ (m n: Nat) : (m:Nat) ^ n++ = m^n * m := recurse_succ (fun _ prod ↦ prod * m) _ _
 
 /-- Exercise 2.3.4-/
