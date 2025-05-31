@@ -6,5 +6,3 @@ Will set up the theory of totally ordered real vector spaces, and the ultraprodu
     - [Blueprint](https://teorth.github.io/estimate_tools/blueprint/)
     - [Documentation](https://teorth.github.io/estimate_tools/docs/)
 - [Blog post](https://terrytao.wordpress.com/2025/05/01/a-proof-of-concept-tool-to-verify-estimates/)
-
-This repository is also hosting a [partial translation of my text _Analysis I_ into Lean](https://github.com/teorth/estimate_tools/blob/master/EstimateTools/analysis/README.md).
