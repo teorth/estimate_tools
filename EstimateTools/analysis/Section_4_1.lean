@@ -280,4 +280,22 @@ theorem Int.sq_nonneg (n:Int) : n*n ≥ 0 := by sorry
 /-- Exercise 4.1.9 -/
 theorem Int.sq_nonneg' (n:Int) : ∃ (m:Nat), n*n = m := by sorry
 
+/-- Not in textbook: create an equivalence between Int and ℤ.  This requires some familiarity with the API for Mathlib's version of the integers. -/
+abbrev Int.equivInt : Int ≃ ℤ where
+  toFun := sorry
+  invFun := sorry
+  left_inv n := sorry
+  right_inv n := sorry
+
+/-- Not in textbook: equivalence preserves order -/
+abbrev Int.equivInt_order : Int ≃o ℤ where
+  toEquiv := Int.equivInt
+  map_rel_iff' := by sorry
+
+/-- Not in textbook: equivalence preserves ring operations -/
+abbrev Int.equivInt_ring : Int ≃+* ℤ where
+  toEquiv := Int.equivInt
+  map_add' := by sorry
+  map_mul' := by sorry
+
 end Section_4_1
