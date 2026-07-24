@@ -244,7 +244,7 @@ theorem Int.neg_gt_neg {a b:Int} (h: a > b) : -a < -b := by sorry
 theorem Int.gt_trans {a b c:Int} (hab: a > b) (hbc: b > c) : a > c := by sorry
 
 /-- Lemma 4.1.11(f) (Order trichotomy) / Exercise 4.1.7 -/
-theorem Int.trichotomous' (a b c:Int) : a > b ∨ a < b ∨ a = b := by sorry
+theorem Int.trichotomous' (a b:Int) : a > b ∨ a < b ∨ a = b := by sorry
 
 /-- Lemma 4.1.11(f) (Order trichotomy) / Exercise 4.1.7 -/
 theorem Int.not_gt_and_lt (a b:Int) : ¬ (a > b ∧ a < b):= by sorry
@@ -272,7 +272,7 @@ instance Int.linearOrder : LinearOrder Int where
 theorem Int.neg_one_mul (a:Int) : -1 * a = -a := by sorry
 
 /-- Exercise 4.1.8 -/
-theorem Int.no_induction : ∃ P: Int → Prop, P 0 ∧ ∀ n, P n → P (n+1) ∧ ¬ ∀ n, P n := by sorry
+theorem Int.no_induction : ∃ P: Int → Prop, (P 0 ∧ ∀ n, P n → P (n+1)) ∧ ¬ ∀ n, P n := by sorry
 
 /-- Exercise 4.1.9 -/
 theorem Int.sq_nonneg (n:Int) : n*n ≥ 0 := by sorry
