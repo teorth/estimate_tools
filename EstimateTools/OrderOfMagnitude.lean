@@ -3,7 +3,6 @@ import EstimateTools.Order
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.Algebra.Group.MinimalAxioms
 import Mathlib.Algebra.Group.TypeTags.Basic
-import Canonical
 
 
 abbrev PositiveHyperreal := { x : Hyperreal // 0 < x }
