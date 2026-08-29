@@ -528,18 +528,18 @@ theorem Set.union_eq_partition (A B:Set) : A ∪ B = (A \ B) ∪ (A ∩ B) ∪ (
 /-- Exercise 3.1.11.  The challenge is to prove this without using `Set.specify`, `Set.specification_axiom`, or `Set.specification_axiom'`. -/
 theorem Set.specification_from_replacement {A:Set} {P: A → Prop} : ∃ B, A ⊆ B ∧ ∀ x, x.val ∈ B ↔ P x := by sorry
 
-/-- Exercise 3.1.12.-/
-theorem Set.subset_union_subset {A B A' B':Set} (hA'A: A' ⊆ A) (hB'B: B' ⊆ B) : A ∪ A' ⊆ A ∪ B := by sorry
+/-- Exercise 3.1.12 (unions). -/
+theorem Set.subset_union_subset {A B A' B':Set} (hA'A: A' ⊆ A) (hB'B: B' ⊆ B) : A' ∪ B' ⊆ A ∪ B := by sorry
 
-/-- Exercise 3.1.12.-/
-theorem Set.subset_inter_subset {A B A' B':Set} (hA'A: A' ⊆ A) (hB'B: B' ⊆ B) : A ∩ A' ⊆ A ∩ B := by sorry
+/-- Exercise 3.1.12 (intersections). -/
+theorem Set.subset_inter_subset {A B A' B':Set} (hA'A: A' ⊆ A) (hB'B: B' ⊆ B) : A' ∩ B' ⊆ A ∩ B := by sorry
 
-/-- Exercise 3.1.12.-/
-theorem Set.subset_diff_subset_counter : ∃ (A B A' B':Set), (A' ⊆ A) ∧ (B' ⊆ B) ∧ ¬ (A \ A') ⊆ (B ∩ B') := by sorry
+/-- Exercise 3.1.12 (differences: a counterexample). -/
+theorem Set.subset_diff_subset_counter : ∃ (A B A' B':Set), (A' ⊆ A) ∧ (B' ⊆ B) ∧ ¬ (A' \ B') ⊆ (A \ B) := by sorry
 
 /- Final part of Exercise 3.1.12: state and prove a reasonable substitute positive result for the above theorem that involves set differences . -/
 
 /-- Exercise 3.1.13 -/
-theorem Set.singleton_iff (A:Set) (hA: A ≠ ∅) : ¬ ∃ B, B ⊂ A ↔ ∃ x, A = {x} := by sorry
+theorem Set.singleton_iff (A:Set) (hA: A ≠ ∅) : (¬∃ B ⊂ A, B ≠ ∅) ↔ ∃ x, A = {x} := by sorry
 
 end Chapter3
