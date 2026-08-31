@@ -55,7 +55,7 @@ lemma mul_succ (n m:Nat) : n * m++ = n * m + n := by
 lemma mul_eq_zero_iff (n m: Nat) : n * m = 0 ↔ n = 0 ∨ m = 0 := by
   sorry
 
-lemma pos_mul_pos {n m: Nat} (h₁: n.isPos) (h₂: m.isPos) : (n * m).isPos := by
+lemma pos_mul_pos {n m: Nat} (h₁: n.IsPos) (h₂: m.IsPos) : (n * m).IsPos := by
   sorry
 
 /-- Proposition 2.3.4 (Distributive law)-/
@@ -88,31 +88,31 @@ instance Nat.commSemiring_inst : CommSemiring Nat where
   mul_comm := mul_comm
 
 /-- Proposition 2.3.6 (Multiplication preserves order) -/
-theorem mul_lt_mul_of_pos_right {a b c: Nat} (h: a < b) (hc: c.isPos) : a * c < b * c := by
+theorem mul_lt_mul_of_pos_right {a b c: Nat} (h: a < b) (hc: c.IsPos) : a * c < b * c := by
   -- This proof is written to follow the structure of the original text.
   rw [lt_iff_add_pos] at h
   obtain ⟨ d, hdpos, hd ⟩ := h
   apply_fun (· * c) at hd
   rw [add_mul] at hd
-  have hdcpos : (d * c).isPos := pos_mul_pos hdpos hc
+  have hdcpos : (d * c).IsPos := pos_mul_pos hdpos hc
   rw [lt_iff_add_pos]
   use d*c
 
 /-- Proposition 2.3.6 (Multiplication preserves order) -/
-theorem mul_gt_mul_of_pos_right {a b c: Nat} (h: a > b) (hc: c.isPos) : a * c > b * c := mul_lt_mul_of_pos_right h hc
+theorem mul_gt_mul_of_pos_right {a b c: Nat} (h: a > b) (hc: c.IsPos) : a * c > b * c := mul_lt_mul_of_pos_right h hc
 
 /-- Proposition 2.3.6 (Multiplication preserves order) -/
-theorem mul_lt_mul_of_pos_left {a b c: Nat} (h: a < b) (hc: c.isPos) : c * a < c * b := by
+theorem mul_lt_mul_of_pos_left {a b c: Nat} (h: a < b) (hc: c.IsPos) : c * a < c * b := by
   simp [mul_comm]
   exact mul_lt_mul_of_pos_right h hc
 
 /-- Proposition 2.3.6 (Multiplication preserves order) -/
-theorem mul_gt_mul_of_pos_left {a b c: Nat} (h: a > b) (hc: c.isPos) : c * a > c * b := mul_lt_mul_of_pos_left h hc
+theorem mul_gt_mul_of_pos_left {a b c: Nat} (h: a > b) (hc: c.IsPos) : c * a > c * b := mul_lt_mul_of_pos_left h hc
 
 
 
 /-- Corollary 2.3.7 (Cancellation law) -/
-lemma mul_cancel_right {a b c: Nat} (h: a * c = b * c) (hc: c.isPos) : a = b := by
+lemma mul_cancel_right {a b c: Nat} (h: a * c = b * c) (hc: c.IsPos) : a = b := by
   -- This proof is written to follow the structure of the original text.
   have := trichotomous a b
   rcases this with hlt | heq | hgt
@@ -132,7 +132,7 @@ instance Nat.isOrderedRing : IsOrderedRing Nat where
 
 
 /-- Proposition 2.3.9 (Euclid's division lemma) / Exercise 2.3.5 -/
-theorem exists_div_mod (n :Nat) {q: Nat} (hq: q.isPos) : ∃ m r: Nat, 0 ≤ r ∧ r < q ∧ n = m * q + r := by
+theorem exists_div_mod (n :Nat) {q: Nat} (hq: q.IsPos) : ∃ m r: Nat, 0 ≤ r ∧ r < q ∧ n = m * q + r := by
   sorry
 
 /-- Definition 2.3.11 (Exponentiation for natural numbers) -/
