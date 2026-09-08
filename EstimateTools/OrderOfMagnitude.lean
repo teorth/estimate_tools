@@ -86,6 +86,12 @@ lemma PositiveHyperreal.order_le_iff {X Y : PositiveHyperreal} : X.order ≤ Y.o
 lemma PositiveHyperreal.order_lt_iff {X Y : PositiveHyperreal} : X.order < Y.order ↔ X.ll Y := by
   convert PositiveHyperreal.asym_preorder.quot_lt_iff _ _
 
+lemma PositiveHyperreal.order_ge_iff {X Y : PositiveHyperreal} : X.order ≥ Y.order ↔ Y.lesssim X := by
+  convert PositiveHyperreal.asym_preorder.quot_ge_iff _ _
+
+lemma PositiveHyperreal.order_gt_iff {X Y : PositiveHyperreal} : X.order > Y.order ↔ Y.ll X := by
+  convert PositiveHyperreal.asym_preorder.quot_gt_iff _ _
+
 noncomputable instance OrderOfMagnitude.linearOrder : LinearOrder OrderOfMagnitude := PositiveHyperreal.asym_preorder.quot_linear (by
    intro X Y
    rcases lt_or_ge (X:Hyperreal) Y with h | h

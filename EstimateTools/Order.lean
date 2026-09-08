@@ -83,6 +83,12 @@ lemma Preorder.quot_lt_iff {α:Type*} (p:Preorder α) (x y: α) : p.quotient x <
   dsimp [Preorder.quotient, OrderQuotient.partialOrder]
   rw [Quotient.lift₂Beta]
 
+lemma Preorder.quot_ge_iff {α:Type*} (p:Preorder α) (x y: α) : p.quotient x ≥ p.quotient y ↔ x ≥ y := by
+  simpa using (p.quot_le_iff y x)
+
+lemma Preorder.quot_gt_iff {α:Type*} (p:Preorder α) (x y: α) : p.quotient x > p.quotient y ↔ x > y := by
+  simpa using (p.quot_lt_iff y x)
+
 open Classical in
 noncomputable def Preorder.quot_linear {α:Type*} (p: Preorder α) (h: ∀ x y : α, x ≤ y ∨ y ≤ x) : LinearOrder (OrderQuotient p) :=
 {
