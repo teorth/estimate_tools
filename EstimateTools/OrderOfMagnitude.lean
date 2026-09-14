@@ -584,7 +584,7 @@ lemma power_i' (X Y: OrderOfMagnitude) (α: ℝ) : (X / Y)^α = X^α / Y^α := b
     exact mul_comm _ _
   apply le_of_lt (Hyperreal.pow_of_pos _ y.property)
 
-lemma power_ii (X: OrderOfMagnitude) (α: ℝ) : X^(α * β) = (X^α)^β := by
+lemma power_ii (X: OrderOfMagnitude) (α β: ℝ) : X^(α * β) = (X^α)^β := by
   obtain ⟨ x, rfl ⟩ := PositiveHyperreal.order_surjective X
   simp only [←PositiveHyperreal.order_pow]
   congr 1
