@@ -54,5 +54,5 @@ abbrev Chapter2.Nat.equivNat_ring : Chapter2.Nat ≃+* ℕ where
     simp [equivNat]
     sorry
 
-lemma Chapter2.Nat.pow_eq_pow (n m : Chapter2.Nat) : n.toNat ^ m.toNat = n^m := by
+lemma Chapter2.Nat.pow_eq_pow (n m : Chapter2.Nat) : n.toNat ^ m.toNat = (n ^ m).toNat := by
   sorry
