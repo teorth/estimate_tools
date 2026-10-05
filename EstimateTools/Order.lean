@@ -1,5 +1,6 @@
 import Init.Core
 import Mathlib.Order.Basic
+import Mathlib.Order.Monotone.Defs
 
 -- It is important here that the preorder is not an instance, because sometimes we want to form the order quotient from a non-canonical preorder
 
@@ -95,3 +96,23 @@ noncomputable def Preorder.quot_linear {α:Type*} (p: Preorder α) (h: ∀ x y :
 
   toDecidableLE := by exact decRel LE.le
 }
+
+/-- A monotone map descends to the order quotients of its preorders. -/
+def Preorder.quot_map {α β : Type*} (p : Preorder α) (q : Preorder β)
+    (f : α → β) (hf : @Monotone α β p q f) : OrderQuotient p → OrderQuotient q :=
+  Quotient.lift (fun x => q.quotient (f x)) (by
+    intro x y hxy
+    apply Quotient.sound
+    exact ⟨hf hxy.1, hf hxy.2⟩)
+
+@[simp]
+lemma Preorder.quot_map_apply {α β : Type*} (p : Preorder α) (q : Preorder β)
+    (f : α → β) (hf : @Monotone α β p q f) (x : α) :
+    p.quot_map q f hf (p.quotient x) = q.quotient (f x) := rfl
+
+lemma Preorder.quot_map_monotone {α β : Type*} (p : Preorder α) (q : Preorder β)
+    (f : α → β) (hf : @Monotone α β p q f) : Monotone (p.quot_map q f hf) := by
+  intro x y
+  refine Quotient.inductionOn₂ x y ?_
+  intro a b hab
+  exact hf hab
