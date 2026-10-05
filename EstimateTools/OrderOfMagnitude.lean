@@ -845,8 +845,21 @@ lemma saturation (I : ℕ → Set Hyperreal) (hI : ∀ n, is_internal (I n)) (hI
 
 
 
+private lemma Hyperreal.is_internal_Ioo (a b : Hyperreal) : is_internal (Set.Ioo a b) := by
+  obtain ⟨A, rfl⟩ := to_hyperreal_surjective a
+  obtain ⟨B, rfl⟩ := to_hyperreal_surjective b
+  refine ⟨fun n ↦ Set.Ioo (A n) (B n), ?_⟩
+  ext x
+  obtain ⟨X, rfl⟩ := to_hyperreal_surjective x
+  simp only [Set.mem_Ioo, mem_internal, to_hyperreal, Hyperreal.lt_def,
+    Filter.Germ.liftRel_coe, Filter.eventually_and]
+
 lemma Hyperreal.Ioi_internal (a b: Hyperreal) : ∃ E : ℕ → ℕ → Set ℝ, Set.Ioo a b = ⋂ n, internal (E n) := by
-  sorry
+  obtain ⟨E, hE⟩ := Hyperreal.is_internal_Ioo a b
+  exact ⟨fun _ ↦ E, by simpa only [Set.iInter_const] using hE⟩
 
 lemma Hyperreal.completeness (a b: ℕ → Hyperreal) (ha: Monotone a) (hb: Antitone b) (hab: ∀ n, a n < b n) : ∃ x, ∀ n, a n < x ∧ x < b n := by
-  sorry
+  exact saturation (fun n ↦ Set.Ioo (a n) (b n))
+    (fun n ↦ Hyperreal.is_internal_Ioo (a n) (b n))
+    (fun n ↦ Set.nonempty_Ioo.mpr (hab n))
+    (fun n ↦ Set.Ioo_subset_Ioo (ha (Nat.le_succ n)) (hb (Nat.le_succ n)))
