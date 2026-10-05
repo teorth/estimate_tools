@@ -1,5 +1,6 @@
 import Init.Core
 import Mathlib.Order.Basic
+import Mathlib.Order.Hom.Basic
 
 -- It is important here that the preorder is not an instance, because sometimes we want to form the order quotient from a non-canonical preorder
 
@@ -77,11 +78,11 @@ convert Quotient.liftBeta _ _ _
 
 lemma Preorder.quot_le_iff {α:Type*} (p:Preorder α) (x y: α) : p.quotient x ≤ p.quotient y ↔ x ≤ y := by
   dsimp [Preorder.quotient, OrderQuotient.partialOrder]
-  rw [Quotient.lift₂Beta]
+  rfl
 
 lemma Preorder.quot_lt_iff {α:Type*} (p:Preorder α) (x y: α) : p.quotient x < p.quotient y ↔ x < y := by
   dsimp [Preorder.quotient, OrderQuotient.partialOrder]
-  rw [Quotient.lift₂Beta]
+  rfl
 
 open Classical in
 noncomputable def Preorder.quot_linear {α:Type*} (p: Preorder α) (h: ∀ x y : α, x ≤ y ∨ y ≤ x) : LinearOrder (OrderQuotient p) :=
@@ -90,8 +91,28 @@ noncomputable def Preorder.quot_linear {α:Type*} (p: Preorder α) (h: ∀ x y :
     apply Quotient.ind; intro x
     apply Quotient.ind; intro y
     dsimp [Preorder.quotient, OrderQuotient.partialOrder]
-    rw [Quotient.lift₂Beta]
     exact h x y
 
   toDecidableLE := by exact decRel LE.le
 }
+
+/-- Quotienting an antisymmetric order does not identify distinct elements. -/
+def OrderQuotient.partialOrderEquiv (α : Type*) [PartialOrder α] :
+    OrderQuotient (inferInstance : Preorder α) ≃o α where
+  toFun := Quotient.lift id (by
+    intro a b hab
+    exact le_antisymm hab.1 hab.2)
+  invFun := Preorder.quotient (inferInstance : Preorder α)
+  left_inv := by
+    intro x
+    refine Quotient.inductionOn x ?_
+    intro a
+    rfl
+  right_inv := by
+    intro a
+    rfl
+  map_rel_iff' := by
+    intro x y
+    refine Quotient.inductionOn₂ x y ?_
+    intro a b
+    rfl
